@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loops Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky product bar, then a 12-col grid of panels: KPIs → findings → trend charts → systems → constraints → register. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #f8f9fb;
+  --line: #e2e6ec;
+  --line-strong: #cfd5de;
+  --ink: #0e1622;
+  --ink-2: #4a5566;
+  --ink-3: #6b7685;
+  --accent: #2a78d6;
+  --accent-soft: #e6f0fc;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+  --grid: #edf0f4;
+  --shadow: 0 1px 2px rgba(14,22,34,.04), 0 1px 1px rgba(14,22,34,.03);
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --surface: #151a22; --surface-2: #1a2029; --line: #252c37; --line-strong: #323b48;
+    --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --grid: #1f2630; --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --surface: #151a22; --surface-2: #1a2029; --line: #252c37; --line-strong: #323b48;
+  --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+  --grid: #1f2630; --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font-sans); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+a { color: var(--accent); }
+.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+
+/* top bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.bar-in, .wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bar-in { display: flex; align-items: center; gap: 20px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; font-size: 16px; }
+.mark { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); display: grid; place-items: center; }
+.mark svg { display: block; }
+.crumbs { color: var(--ink-3); font-size: 13px; }
+.crumbs b { color: var(--ink-2); font-weight: 500; }
+.bar nav { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+.bar nav a { color: var(--ink-2); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
+.bar nav a:hover, .bar nav a:focus-visible { background: var(--surface-2); color: var(--ink); outline: none; }
+
+.wrap { padding-block: 24px 64px; display: grid; gap: 20px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.head h1 { font-size: 24px; font-weight: 600; letter-spacing: -.02em; }
+.head p { margin: 4px 0 0; color: var(--ink-2); max-width: 68ch; }
+.asof { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); min-width: 0; }
+.card-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 18px 0; flex-wrap: wrap; }
+.card-h h2 { font-size: 14px; font-weight: 600; }
+.card-h .sub { color: var(--ink-3); font-size: 12px; }
+.card-b { padding: 12px 18px 18px; }
+.span-12 { grid-column: span 12; } .span-8 { grid-column: span 8; } .span-7 { grid-column: span 7; } .span-6 { grid-column: span 6; } .span-5 { grid-column: span 5; } .span-4 { grid-column: span 4; }
+@media (max-width: 980px) { .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; } }
+
+.section-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); font-weight: 600; margin: 8px 0 -6px; }
+
+/* KPI tiles */
+.kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1100px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+.kpi { padding: 14px 16px 12px; display: grid; gap: 6px; }
+.kpi .lbl { font-size: 12px; color: var(--ink-2); font-weight: 500; }
+.kpi .val { font: 600 28px/1.1 var(--font-mono); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.kpi .meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-3); min-height: 24px; }
+.delta { font: 500 12px var(--font-mono); padding: 1px 6px; border-radius: 5px; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); white-space: nowrap; }
+.spark { width: 72px; height: 24px; flex: none; }
+
+/* findings */
+.findings { display: grid; gap: 0; }
+.finding { display: grid; grid-template-columns: 4px minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); align-items: start; }
+.finding:first-child { border-top: 0; padding-top: 2px; }
+.finding .stripe { align-self: stretch; border-radius: 2px; }
+.finding h3 { font-size: 14px; font-weight: 600; }
+.finding p { margin: 2px 0 0; color: var(--ink-2); max-width: 78ch; }
+.finding .fig { font: 600 18px var(--font-mono); white-space: nowrap; text-align: right; }
+.finding .fig small { display: block; font: 400 11px var(--font-sans); color: var(--ink-3); }
+
+/* charts */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 11px var(--font-sans); }
+.chart .lab { fill: var(--ink); font: 500 11px var(--font-mono); }
+.chart .lab2 { fill: var(--ink-2); font: 500 11px var(--font-sans); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); margin-top: 10px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.legend i.ln { height: 2px; border-radius: 1px; width: 14px; }
+.tip { position: fixed; z-index: 20; pointer-events: none; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.12); min-width: 150px; }
+.tip b { display: block; font-weight: 600; margin-bottom: 4px; }
+.tip .r { display: flex; justify-content: space-between; gap: 14px; color: var(--ink-2); }
+.tip .r span:last-child { font-family: var(--font-mono); color: var(--ink); }
+.tip .r i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+
+/* funnel */
+.funnel { display: grid; gap: 10px; }
+.frow { display: grid; grid-template-columns: 160px minmax(0, 1fr) 54px; gap: 12px; align-items: center; font-size: 13px; }
+@media (max-width: 560px) { .frow { grid-template-columns: 110px minmax(0, 1fr) 44px; } }
+.frow .track { height: 22px; background: var(--surface-2); border-radius: 5px; overflow: hidden; display: flex; gap: 2px; }
+.frow .seg { height: 100%; border-radius: 0 4px 4px 0; }
+.frow .seg + .seg { border-radius: 0 4px 4px 0; }
+.frow .n { text-align: right; font: 500 13px var(--font-mono); }
+.frow .k { color: var(--ink-2); }
+
+/* systems */
+.systems { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.sys { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: var(--surface-2); display: grid; gap: 6px; align-content: start; }
+.sys .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.sys .id { font: 600 15px var(--font-mono); }
+.sys .nm { color: var(--ink-3); font-size: 12px; }
+.sys p { margin: 0; color: var(--ink-2); font-size: 12.5px; }
+.sys .io { font: 500 12px var(--font-mono); color: var(--ink-2); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 500; color: var(--ink-2); border: 1px solid var(--line); background: var(--surface); padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+
+/* tables */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th { text-align: left; font-weight: 600; font-size: 11.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; background: var(--surface-2); padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; position: sticky; top: 0; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.mono { white-space: nowrap; }
+.scroll { max-height: 460px; overflow: auto; }
+
+.timeline { display: grid; gap: 0; }
+.ms { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; padding: 10px 0; border-top: 1px solid var(--line); }
+.ms:first-child { border-top: 0; padding-top: 0; }
+.ms .d { font: 600 12px var(--font-mono); color: var(--ink); line-height: 1.3; }
+.ms .d small { display: block; font: 400 11px var(--font-sans); color: var(--ink-3); }
+.ms h3 { font-size: 13.5px; font-weight: 600; }
+.ms p { margin: 2px 0 0; color: var(--ink-2); font-size: 12.5px; }
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; padding: 2px; background: var(--surface-2); }
+.seg-ctl button { border: 0; background: transparent; font: 500 12.5px var(--font-sans); color: var(--ink-2); padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+.seg-ctl button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+select, input[type="search"] { font: 13px var(--font-sans); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; min-width: 0; }
+input[type="search"] { flex: 1 1 200px; max-width: 320px; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.count { color: var(--ink-3); font-size: 12px; margin-left: auto; }
+.notes { margin: 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 6px; max-width: 90ch; }
+.foot { color: var(--ink-3); font-size: 12px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M5 4.5a3.5 3.5 0 1 0 0 7c1.6 0 2.4-1.1 3-2.2l.1-.2c.6-1.1 1.3-2.6 2.9-2.6a1.5 1.5 0 1 1 0 3" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+      Loops
+    </div>
+    <div class="crumbs">Norfolk Vanguard · <b>ICT Loop Testing</b></div>
+    <nav aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#throughput">Throughput</a>
+      <a href="#closeout">Close-out</a>
+      <a href="#systems">Systems</a>
+      <a href="#constraints">Constraints</a>
+      <a href="#register">Loop register</a>
+      <a href="#notes">Data notes</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="head" id="overview">
+    <div>
+      <h1>Loop testing progress</h1>
+      <p id="headline"></p>
+    </div>
+    <div class="asof">
+      <span class="pill"><span class="dot" style="background:var(--good)"></span>Data through <b class="num" id="through"></b></span>
+      <span class="pill">Report <span class="num" id="reported"></span></span>
+      <span class="pill"><span id="nreports"></span>&nbsp;daily reports</span>
+    </div>
+  </section>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section class="card">
+    <div class="card-h"><h2>What the data says</h2><span class="sub">Calculated from the daily figures</span></div>
+    <div class="card-b"><div class="findings" id="findings"></div></div>
+  </section>
+
+  <div class="section-label" id="throughput">Throughput</div>
+  <div class="grid">
+    <section class="card span-7">
+      <div class="card-h"><h2>Cumulative progress</h2><span class="sub">Loop references / CPCLs, by day the figures describe</span></div>
+      <div class="card-b"><div class="chart" id="c-cum"></div><div class="legend" id="l-cum"></div></div>
+    </section>
+    <section class="card span-5">
+      <div class="card-h"><h2>HW I/O completed per day</h2><span class="sub">Individual signals, by system</span></div>
+      <div class="card-b"><div class="chart" id="c-io"></div><div class="legend" id="l-io"></div></div>
+    </section>
+  </div>
+
+  <div class="section-label" id="closeout">CWA close-out</div>
+  <div class="grid">
+    <section class="card span-7">
+      <div class="card-h"><h2>CPCLs recorded in CWA</h2><span class="sub">OK vs Punch B, with PB share</span></div>
+      <div class="card-b"><div class="chart" id="c-cwa"></div><div class="legend" id="l-cwa"></div></div>
+    </section>
+    <section class="card span-5">
+      <div class="card-h"><h2>Pipeline today</h2><span class="sub" id="pipe-sub"></span></div>
+      <div class="card-b"><div class="funnel" id="funnel"></div>
+        <div class="legend" style="margin-top:14px"><span><i style="background:var(--s1)"></i>OK</span><span><i style="background:var(--s2)"></i>Punch B</span><span><i style="background:var(--ink-3)"></i>Count</span></div>
+      </div>
+    </section>
+    <section class="card span-12">
+      <div class="card-h"><h2>Reconciliation backlog</h2><span class="sub">Tracker and CWA disagree on these loop references</span></div>
+      <div class="card-b"><div class="chart" id="c-rec"></div><div class="legend" id="l-rec"></div></div>
+    </section>
+  </div>
+
+  <div class="section-label" id="systems">Systems</div>
+  <section class="card">
+    <div class="card-h"><h2>Workfront by system</h2><span class="sub">Status from the latest report · I/O total for 14–16 Oct</span></div>
+    <div class="card-b"><div class="systems" id="sysgrid"></div></div>
+  </section>
+
+  <div class="section-label" id="constraints">Constraints &amp; look-ahead</div>
+  <div class="grid">
+    <section class="card span-8">
+      <div class="card-h"><h2>Constraints log</h2><span class="sub">Raised in the daily reports</span></div>
+      <div class="card-b"><div class="tbl-wrap"><table>
+        <thead><tr><th>Constraint</th><th>Raised</th><th>Status</th><th>Latest</th></tr></thead>
+        <tbody id="cons"></tbody>
+      </table></div></div>
+    </section>
+    <section class="card span-4">
+      <div class="card-h"><h2>Coming up</h2><span class="sub">Dates in the 17 Oct report</span></div>
+      <div class="card-b"><div class="timeline" id="ms"></div></div>
+    </section>
+  </div>
+
+  <div class="section-label" id="register">Loop register</div>
+  <section class="card">
+    <div class="card-h"><h2>Planned loop lists</h2><span class="sub">Signal rows from the 9 Oct and 12 Oct look-ahead tables</span></div>
+    <div class="card-b">
+      <div class="filters">
+        <div class="seg-ctl" role="group" aria-label="List" id="f-list"></div>
+        <select id="f-sys" aria-label="System"></select>
+        <input type="search" id="f-q" placeholder="Search tag, loop or package" aria-label="Search loops">
+        <span class="count" id="f-count"></span>
+      </div>
+      <div class="tbl-wrap scroll"><table>
+        <thead id="reg-h"></thead>
+        <tbody id="reg-b"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <div class="section-label" id="notes">Data notes</div>
+  <section class="card">
+    <div class="card-b" style="padding-top:16px">
+      <ul class="notes" id="dnotes"></ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Source: “Loop test daily Look Ahead” email thread, 9–17 Oct 2026. Rebuild with <span class="mono">python3 scripts/build_data.py</span>.</span>
+    <span>CPCL = commissioning check list · CWA = completions system · OK / PB / OS = accepted / Punch B / outstanding</span>
+  </div>
+</main>
+
+<div class="tip" id="tip" hidden></div>
+
+<script src="data/data.js"></script>
+<script>
+(function () {
+  const D = window.LOOPS_DATA;
+  const days = D.days;
+  const last = days[days.length - 1];
+  const prev = days[days.length - 2];
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const fmtD = (s) => { const d = new Date(s + "T00:00:00"); return d.getDate() + " " + d.toLocaleString("en-GB", { month: "short" }); };
+  const pct = (a, b) => Math.round((a / b) * 100);
+  const el = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstChild; };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const sum = (o) => o ? Object.values(o).reduce((a, b) => a + b, 0) : null;
+
+  // ---------- header ----------
+  document.getElementById("through").textContent = fmtD(last.progressThrough);
+  document.getElementById("reported").textContent = fmtD(last.reportDate);
+  document.getElementById("nreports").textContent = days.length + 1;
+  document.getElementById("headline").textContent = last.headline;
+
+  // ---------- KPIs ----------
+  const spark = (vals, color) => {
+    const v = vals.filter((x) => x != null), w = 72, h = 24, mn = Math.min(...v), mx = Math.max(...v);
+    const pts = v.map((y, i) => [(i / (v.length - 1)) * (w - 4) + 2, h - 3 - ((y - mn) / (mx - mn || 1)) * (h - 6)]);
+    const d = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join("");
+    const e = pts[pts.length - 1];
+    return `<svg class="spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${e[0]}" cy="${e[1]}" r="2.4" fill="${color}"/></svg>`;
+  };
+  const ioNow = sum(last.ioBySystem), ioPrev = sum(prev.ioBySystem);
+  const kpis = [
+    { l: "Loop refs commenced", v: last.commenced, d: last.commenced - prev.commenced, s: days.map((x) => x.commenced) },
+    { l: "Field complete", v: last.fieldComplete, d: last.fieldComplete - prev.fieldComplete, s: days.map((x) => x.fieldComplete) },
+    { l: "Recorded OK/PB in CWA", v: last.cwaTotal, d: last.cwaTotal - prev.cwaTotal, s: days.map((x) => x.cwaTotal) },
+    { l: "Punch B share of CWA", v: pct(last.cwaPb, last.cwaTotal) + "%", d: (pct(last.cwaPb, last.cwaTotal) - pct(prev.cwaPb, prev.cwaTotal)) + " pts", s: days.map((x) => x.cwaPb / x.cwaTotal), warn: true },
+    { l: "Awaiting CWA close", v: last.awaitingCwa, d: last.awaitingCwa - prev.awaitingCwa, s: days.map((x) => x.awaitingCwa), warn: true },
+    { l: "HW I/O yesterday", v: ioNow, d: ioNow - ioPrev, s: days.map((x) => sum(x.ioBySystem)) },
+  ];
+  const kEl = document.getElementById("kpis");
+  kpis.forEach((k) => {
+    const sign = typeof k.d === "number" ? (k.d > 0 ? "+" + k.d : String(k.d)) : (k.d.startsWith("-") ? k.d : "+" + k.d);
+    kEl.appendChild(el(`<div class="card kpi"><div class="lbl">${k.l}</div><div class="val">${k.v}</div>
+      <div class="meta"><span class="delta" title="Change vs previous report">${sign}</span>${spark(k.s, k.warn ? css("--serious") : css("--accent"))}</div></div>`));
+  });
+
+  // ---------- findings ----------
+  const first = days[0];
+  const d14 = days.find((d) => d.progressThrough === "2026-10-14");
+  const ioDays = days.filter((d) => d.ioBySystem);
+  const non82 = ioDays.map((d) => sum(d.ioBySystem) - (d.ioBySystem["82"] || 0));
+  const s82 = ioDays.map((d) => d.ioBySystem["82"] || 0);
+  const resid = days.filter((d) => d.partialAlreadyInCwa != null).map((d) => d.cwaTotal - (d.fieldComplete - d.awaitingCwa + d.partialAlreadyInCwa));
+  const wip = last.commenced - last.fieldComplete;
+  const fcRate = ((last.fieldComplete - first.fieldComplete) / (days.length - 1)).toFixed(1);
+  const findings = [
+    { c: "--critical", t: "Punch B is growing faster than clean closures",
+      p: `Punch B went from ${pct(first.cwaPb, first.cwaTotal)}% to ${pct(last.cwaPb, last.cwaTotal)}% of CWA records. Since ${fmtD(d14.progressThrough)}, PB rose by ${last.cwaPb - d14.cwaPb} while OK rose by ${last.cwaOk - d14.cwaOk}. The CWA total looks healthy, but the close-out work behind it keeps growing.`,
+      f: last.cwaPb, fs: "PB records" },
+    { c: "--serious", t: "Field progress is getting ahead of CWA",
+      p: `Field-complete loop references still showing OS in CWA went from 0 on 12 Oct to ${last.awaitingCwa}. A further ${last.partialAlreadyInCwa} partially tested references are already OK/PB in CWA, which is the opposite mismatch.`,
+      f: last.awaitingCwa + last.partialAlreadyInCwa, fs: "refs to reconcile" },
+    { c: "--good", t: "Instrument I/O rate is rising without System 82",
+      p: `Without System 82 electrical, completed I/O went ${non82.join(" → ")} over ${ioDays.map((d) => fmtD(d.progressThrough)).join(", ")}. System 82 accounted for ${s82[0]} of ${sum(ioDays[0].ioBySystem)} and ${s82[1]} of ${sum(ioDays[1].ioBySystem)} on the high days. The drop to ${ioNow} on 16 Oct is the 82 work finishing plus the Level 7 outage, not a slowdown.`,
+      f: non82[non82.length - 1], fs: "non-82 I/O, 16 Oct" },
+    { c: "--warning", t: "Work in progress keeps widening",
+      p: `${wip} commenced loop references are not field complete (${last.partial} partially tested, ${last.noIoYet} with no I/O yet), up from ${first.commenced - first.fieldComplete} on 11 Oct. Field completions average ${fcRate} a day, so finishing commenced loops before opening new ones would show up quickly in CPCL closures.`,
+      f: wip, fs: "open loop refs" },
+    { c: "--warning", t: "Figures do not quite add up",
+      p: `Field complete − awaiting CWA + partial-already-in-CWA comes out ${resid.map((r) => r).join(", ")} below the CWA total on each day from 13 Oct. The 16 Oct report attributes ${last.cpclAttributed} closures to the day, but CWA rose by ${last.cwaTotal - prev.cwaTotal}. Worth a tracker vs CWA check.`,
+      f: resid[resid.length - 1], fs: "unexplained CPCLs" },
+  ];
+  const fEl = document.getElementById("findings");
+  findings.forEach((f) => fEl.appendChild(el(`<div class="finding"><span class="stripe" style="background:var(${f.c})"></span>
+    <div><h3>${f.t}</h3><p>${f.p}</p></div><div class="fig">${f.f}<small>${f.fs}</small></div></div>`)));
+
+  // ---------- chart helpers ----------
+  const tip = document.getElementById("tip");
+  const showTip = (ev, title, rows) => {
+    tip.innerHTML = `<b>${esc(title)}</b>` + rows.map((r) => `<div class="r"><span>${r.c ? `<i style="background:${r.c}"></i>` : ""}${esc(r.k)}</span><span>${esc(r.v)}</span></div>`).join("");
+    tip.hidden = false;
+    const pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = ev.clientX + pad, y = ev.clientY + pad;
+    if (x + w > innerWidth - 8) x = ev.clientX - w - pad;
+    if (y + h > innerHeight - 8) y = ev.clientY - h - pad;
+    tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
+  };
+  const hideTip = () => { tip.hidden = true; };
+  const niceMax = (v) => { const p = Math.pow(10, Math.floor(Math.log10(v))); const n = v / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * p; };
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const frame = (host, h, m) => {
+    host.innerHTML = "";
+    const W = Math.max(280, host.clientWidth);
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${h}`, height: h, role: "img" }, host);
+    return { svg, W, H: h, x0: m.l, x1: W - m.r, y0: h - m.b, y1: m.t };
+  };
+  const yAxis = (f, max, ticks) => {
+    for (let i = 0; i <= ticks; i++) {
+      const v = (max / ticks) * i, y = f.y0 - (v / max) * (f.y0 - f.y1);
+      svgEl("line", { x1: f.x0, x2: f.x1, y1: y, y2: y, stroke: css(i ? "--grid" : "--line-strong"), "stroke-width": 1 }, f.svg);
+      const t = svgEl("text", { x: f.x0 - 8, y: y + 4, "text-anchor": "end" }, f.svg); t.textContent = v;
+    }
+  };
+  const legend = (id, items) => { document.getElementById(id).innerHTML = items.map((i) => `<span><i class="${i.line ? "ln" : ""}" style="background:${i.c}"></i>${i.k}</span>`).join(""); };
+
+  // stacked / grouped bars; series: [{k, c, get(d)}]
+  function bars(host, rows, series, opt) {
+    const f = frame(host, opt.h || 240, { l: 34, r: 8, t: 22, b: 28 });
+    const totals = rows.map((r) => opt.grouped ? Math.max(...series.map((s) => s.get(r) || 0)) : series.reduce((a, s) => a + (s.get(r) || 0), 0));
+    const max = niceMax(Math.max(...totals) * 1.08);
+    yAxis(f, max, max % 4 === 0 && max / 4 >= 1 && Number.isInteger(max / 4) ? 4 : 5);
+    const band = (f.x1 - f.x0) / rows.length;
+    const bw = Math.min(opt.grouped ? 22 : 46, band * (opt.grouped ? 0.3 : 0.56));
+    const sy = (v) => (v / max) * (f.y0 - f.y1);
+    rows.forEach((r, i) => {
+      const cx = f.x0 + band * (i + 0.5);
+      const g = svgEl("g", { tabindex: 0, role: "listitem", "aria-label": opt.label(r) }, f.svg);
+      let y = f.y0;
+      const present = series.filter((s) => s.get(r) != null && s.get(r) > 0);
+      present.forEach((s, j) => {
+        const v = s.get(r), hgt = sy(v);
+        let x, top;
+        if (opt.grouped) { x = cx - (series.length * bw + (series.length - 1) * 4) / 2 + series.indexOf(s) * (bw + 4); top = f.y0 - hgt; }
+        else { x = cx - bw / 2; top = y - hgt; }
+        const isTop = opt.grouped || j === present.length - 1;
+        const gap = !opt.grouped && j > 0 ? 2 : 0;
+        const hh = Math.max(0, hgt - gap);
+        const rr = isTop ? Math.min(4, hh / 2, bw / 2) : 0;
+        const p = `M${x},${top + hh + (opt.grouped ? 0 : 0)}V${top + rr}${rr ? `Q${x},${top} ${x + rr},${top}` : ""}H${x + bw - rr}${rr ? `Q${x + bw},${top} ${x + bw},${top + rr}` : ""}V${top + hh}Z`;
+        svgEl("path", { d: p, fill: s.c }, g);
+        if (opt.grouped) { const t = svgEl("text", { x: x + bw / 2, y: top - 6, "text-anchor": "middle", class: "lab" }, g); t.textContent = v; }
+        if (!opt.grouped) y = top - 0;
+      });
+      if (!opt.grouped && totals[i] > 0) { const t = svgEl("text", { x: cx, y: f.y0 - sy(totals[i]) - 7, "text-anchor": "middle", class: "lab" }, g); t.textContent = opt.topLabel ? opt.topLabel(r, totals[i]) : totals[i]; }
+      if (!present.length) { const t = svgEl("text", { x: cx, y: f.y0 - 8, "text-anchor": "middle" }, g); t.textContent = "n/r"; }
+      const xl = svgEl("text", { x: cx, y: f.H - 8, "text-anchor": "middle" }, f.svg); xl.textContent = opt.xLabel(r);
+      const hit = svgEl("rect", { x: cx - band / 2, y: f.y1, width: band, height: f.y0 - f.y1, fill: "transparent" }, g);
+      const fire = (ev) => showTip(ev, opt.xLabel(r) + (opt.tipSuffix || ""), opt.tip(r));
+      hit.addEventListener("pointermove", fire); hit.addEventListener("pointerleave", hideTip);
+      g.addEventListener("focus", () => { const b = g.getBoundingClientRect(); fire({ clientX: b.left + b.width / 2, clientY: b.top + 20 }); });
+      g.addEventListener("blur", hideTip);
+    });
+  }
+
+  function lines(host, rows, series, opt) {
+    const f = frame(host, opt.h || 260, { l: 34, r: 112, t: 14, b: 28 });
+    const max = niceMax(Math.max(...rows.flatMap((r) => series.map((s) => s.get(r)))) * 1.05);
+    yAxis(f, max, 4);
+    const sx = (i) => f.x0 + 10 + (i / (rows.length - 1)) * (f.x1 - f.x0 - 20);
+    const sy = (v) => f.y0 - (v / max) * (f.y0 - f.y1);
+    rows.forEach((r, i) => { const t = svgEl("text", { x: sx(i), y: f.H - 8, "text-anchor": "middle" }, f.svg); t.textContent = opt.xLabel(r); });
+    const ends = [];
+    series.forEach((s) => {
+      const pts = rows.map((r, i) => [sx(i), sy(s.get(r))]);
+      const area = `M${pts[0][0]},${f.y0}` + pts.map((p) => `L${p[0]},${p[1]}`).join("") + `L${pts[pts.length - 1][0]},${f.y0}Z`;
+      if (s.area) svgEl("path", { d: area, fill: s.c, "fill-opacity": 0.08 }, f.svg);
+      svgEl("path", { d: pts.map((p, i) => (i ? "L" : "M") + p[0] + "," + p[1]).join(""), fill: "none", stroke: s.c, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, f.svg);
+      const e = pts[pts.length - 1];
+      svgEl("circle", { cx: e[0], cy: e[1], r: 4, fill: s.c, stroke: css("--surface"), "stroke-width": 2 }, f.svg);
+      ends.push({ y: e[1], x: e[0], s, v: s.get(rows[rows.length - 1]) });
+    });
+    // direct labels, nudged apart
+    ends.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 15) ends[i].y = ends[i - 1].y + 15;
+    ends.forEach((e) => {
+      const t = svgEl("text", { x: e.x + 10, y: e.y + 4, class: "lab" }, f.svg); t.textContent = e.v;
+      const t2 = svgEl("text", { x: e.x + 10 + String(e.v).length * 7.4 + 6, y: e.y + 4, class: "lab2" }, f.svg); t2.textContent = e.s.short;
+    });
+    const cross = svgEl("line", { y1: f.y1, y2: f.y0, stroke: css("--line-strong"), "stroke-dasharray": "3 3", visibility: "hidden" }, f.svg);
+    const hit = svgEl("rect", { x: f.x0, y: f.y1, width: f.x1 - f.x0, height: f.y0 - f.y1, fill: "transparent" }, f.svg);
+    hit.addEventListener("pointermove", (ev) => {
+      const b = f.svg.getBoundingClientRect(), px = ((ev.clientX - b.left) / b.width) * f.W;
+      let i = Math.round(((px - f.x0 - 10) / (f.x1 - f.x0 - 20)) * (rows.length - 1)); i = Math.max(0, Math.min(rows.length - 1, i));
+      cross.setAttribute("x1", sx(i)); cross.setAttribute("x2", sx(i)); cross.setAttribute("visibility", "visible");
+      showTip(ev, "Through " + opt.xLabel(rows[i]), series.map((s) => ({ k: s.k, v: s.get(rows[i]), c: s.c })));
+    });
+    hit.addEventListener("pointerleave", () => { cross.setAttribute("visibility", "hidden"); hideTip(); });
+  }
+
+  const SYS = [
+    { id: "40", k: "System 40", c: "--s1" }, { id: "82", k: "System 82", c: "--s2" }, { id: "97", k: "System 97", c: "--s3" },
+    { id: "47", k: "System 47", c: "--s4" }, { id: "56", k: "System 56", c: "--s5" },
+  ];
+
+  function renderCharts() {
+    const xl = (r) => fmtD(r.progressThrough);
+    const cum = [
+      { k: "HW loop refs commenced", short: "commenced", c: css("--s1"), get: (r) => r.commenced, area: true },
+      { k: "Field complete", short: "field complete", c: css("--s2"), get: (r) => r.fieldComplete },
+      { k: "Recorded OK/PB in CWA", short: "in CWA", c: css("--s3"), get: (r) => r.cwaTotal },
+    ];
+    lines(document.getElementById("c-cum"), days, cum, { xLabel: xl });
+    legend("l-cum", cum.map((s) => ({ k: s.k, c: s.c, line: true })));
+
+    const io = SYS.map((s) => ({ k: s.k, c: css(s.c), get: (r) => r.ioBySystem ? r.ioBySystem[s.id] : null }));
+    bars(document.getElementById("c-io"), ioDays, io, {
+      xLabel: xl, label: (r) => xl(r) + ": " + sum(r.ioBySystem) + " I/O",
+      tip: (r) => io.filter((s) => s.get(r)).map((s) => ({ k: s.k, v: s.get(r), c: s.c })).concat([{ k: "Total", v: sum(r.ioBySystem) }]),
+    });
+    legend("l-io", io);
+
+    const cwa = [
+      { k: "OK", c: css("--s1"), get: (r) => r.cwaOk },
+      { k: "Punch B", c: css("--s2"), get: (r) => r.cwaPb },
+    ];
+    bars(document.getElementById("c-cwa"), days, cwa, {
+      xLabel: xl, label: (r) => `${xl(r)}: ${r.cwaOk} OK, ${r.cwaPb} PB`, h: 250,
+      topLabel: (r, t) => `${t} · ${pct(r.cwaPb, t)}% PB`,
+      tip: (r) => [{ k: "OK", v: r.cwaOk, c: cwa[0].c }, { k: "Punch B", v: r.cwaPb, c: cwa[1].c }, { k: "Total", v: r.cwaTotal }, { k: "PB share", v: pct(r.cwaPb, r.cwaTotal) + "%" }],
+    });
+    legend("l-cwa", cwa);
+
+    const rec = [
+      { k: "Field complete, still OS in CWA", c: css("--s1"), get: (r) => r.awaitingCwa },
+      { k: "Partially tested, already OK/PB in CWA", c: css("--s2"), get: (r) => r.partialAlreadyInCwa },
+    ];
+    bars(document.getElementById("c-rec"), days, rec, {
+      grouped: true, h: 210, xLabel: xl, label: (r) => xl(r),
+      tip: (r) => rec.map((s) => ({ k: s.k, v: s.get(r) == null ? "not reported" : s.get(r), c: s.c })),
+    });
+    legend("l-rec", rec);
+  }
+  renderCharts();
+  let rz; new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(renderCharts, 80); }).observe(document.querySelector(".wrap"));
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderCharts);
+  new MutationObserver(renderCharts).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // ---------- funnel ----------
+  document.getElementById("pipe-sub").textContent = "Through " + fmtD(last.progressThrough);
+  const fmax = last.commenced;
+  const frows = [
+    { k: "Commenced", segs: [{ v: last.commenced, c: "--ink-3" }], n: last.commenced },
+    { k: "Field complete", segs: [{ v: last.fieldComplete, c: "--ink-3" }], n: last.fieldComplete },
+    { k: "Partially tested", segs: [{ v: last.partial, c: "--ink-3" }], n: last.partial },
+    { k: "No I/O complete yet", segs: [{ v: last.noIoYet, c: "--ink-3" }], n: last.noIoYet },
+    { k: "Recorded in CWA", segs: [{ v: last.cwaOk, c: "--s1" }, { v: last.cwaPb, c: "--s2" }], n: last.cwaTotal },
+    { k: "Awaiting CWA close", segs: [{ v: last.awaitingCwa, c: "--serious" }], n: last.awaitingCwa },
+  ];
+  const fu = document.getElementById("funnel");
+  frows.forEach((r) => fu.appendChild(el(`<div class="frow"><span class="k">${r.k}</span><div class="track">${r.segs.map((s) => `<span class="seg" style="width:${(s.v / fmax) * 100}%;background:var(${s.c})"></span>`).join("")}</div><span class="n">${r.n}</span></div>`)));
+
+  // ---------- systems ----------
+  const ioTot = {};
+  ioDays.forEach((d) => Object.entries(d.ioBySystem).forEach(([k, v]) => { ioTot[k] = (ioTot[k] || 0) + v; }));
+  const remain = (days.find((d) => d.remainingScope) || {}).remainingScope || {};
+  const ST = { active: ["--good", "Active"], issue: ["--serious", "Issue"], planned: ["--accent", "Planned"], prep: ["--ink-3", "Readiness"] };
+  const sg = document.getElementById("sysgrid");
+  D.systems.forEach((s) => {
+    const st = ST[s.state];
+    const io = ioTot[s.id] != null ? `${ioTot[s.id]} I/O 14–16 Oct` : "No I/O reported 14–16 Oct";
+    const rem = remain[s.id] ? ` · 13 Oct remaining: ${remain[s.id].loopRefs} refs / ${remain[s.id].io} I/O` : "";
+    sg.appendChild(el(`<div class="sys"><div class="top"><div><div class="id">${esc(s.id)}</div><div class="nm">${esc(s.name)}</div></div>
+      <span class="chip"><span class="dot" style="background:var(${st[0]})"></span>${esc(s.label)}</span></div>
+      <div class="io">${io}${rem}</div><p>${esc(s.note)}</p></div>`));
+  });
+
+  // ---------- constraints & milestones ----------
+  const CS = { open: ["--critical", "Open"], partial: ["--warning", "Partly fixed"], resolved: ["--good", "Resolved"], unknown: ["--ink-3", "No update"] };
+  const order = { open: 0, partial: 1, unknown: 2, resolved: 3 };
+  const cb = document.getElementById("cons");
+  D.constraints.slice().sort((a, b) => order[a.status] - order[b.status]).forEach((c) => {
+    const s = CS[c.status];
+    cb.appendChild(el(`<tr><td style="font-weight:500;min-width:170px">${esc(c.title)}</td><td class="mono">${fmtD(c.raised)}</td>
+      <td><span class="chip"><span class="dot" style="background:var(${s[0]})"></span>${s[1]}</span></td><td style="color:var(--ink-2);min-width:260px">${esc(c.detail)}</td></tr>`));
+  });
+  const today = new Date(last.reportDate + "T00:00:00");
+  const msEl = document.getElementById("ms");
+  D.milestones.forEach((m) => {
+    const dd = Math.round((new Date(m.date + "T00:00:00") - today) / 864e5);
+    const rel = dd === 0 ? "today" : dd === 1 ? "in 1 day" : `in ${dd} days`;
+    msEl.appendChild(el(`<div class="ms"><div class="d">${fmtD(m.date)}<small>${rel}</small></div><div><h3>${esc(m.title)}</h3><p>${esc(m.detail)}</p></div></div>`));
+  });
+
+  // ---------- register ----------
+  const lists = D.register.map((l) => ({ ...l, name: /09/.test(l.sent) ? "9 Oct list" : "12 Oct list" })).sort((a, b) => parseInt(a.name) - parseInt(b.name));
+  let cur = lists.length - 1;
+  const fl = document.getElementById("f-list"), fs = document.getElementById("f-sys"), fq = document.getElementById("f-q");
+  lists.forEach((l, i) => {
+    const b = el(`<button type="button" id="f-list-${i}">${l.name} <span class="num" style="color:var(--ink-3)">${l.rows.length}</span></button>`);
+    b.addEventListener("click", () => { cur = i; syncList(); });
+    fl.appendChild(b);
+  });
+  const cols9 = [["system", "System"], ["comm", "Comm pkg"], ["mc", "MC pkg"], ["tag", "Tag"], ["signal", "Signal tag"], ["loop", "Loop no."], ["rio", "RIO"], ["rfcc", "RFCC"], ["io", "I/O"]];
+  const cols12 = [["group", "Group"], ["system", "System"], ["comm", "Comm pkg"], ["mc", "MC pkg"], ["tag", "Tag"], ["signal", "Signal tag"], ["loop", "Loop no."]];
+  function syncList() {
+    [...fl.children].forEach((b, i) => b.setAttribute("aria-pressed", i === cur));
+    const systems = [...new Set(lists[cur].rows.map((r) => r.system))].sort();
+    fs.innerHTML = `<option value="">All systems</option>` + systems.map((s) => `<option>${esc(s)}</option>`).join("");
+    renderReg();
+  }
+  function renderReg() {
+    const l = lists[cur], cols = l.rows[0].rio ? cols9 : cols12, q = fq.value.trim().toLowerCase(), sys = fs.value;
+    const rows = l.rows.filter((r) => (!sys || r.system === sys) && (!q || Object.values(r).join(" ").toLowerCase().includes(q)));
+    document.getElementById("reg-h").innerHTML = "<tr>" + cols.map((c) => `<th>${c[1]}</th>`).join("") + "</tr>";
+    document.getElementById("reg-b").innerHTML = rows.map((r) => "<tr>" + cols.map((c) => `<td class="${c[0] === "system" ? "" : "mono"}">${esc(r[c[0]] || "")}</td>`).join("") + "</tr>").join("")
+      || `<tr><td colspan="${cols.length}" style="color:var(--ink-3)">No rows match. Clear the search or pick another system.</td></tr>`;
+    const loops = new Set(rows.map((r) => r.loop)).size;
+    document.getElementById("f-count").textContent = `${rows.length} signals · ${loops} loops`;
+  }
+  fs.addEventListener("change", renderReg); fq.addEventListener("input", renderReg);
+  syncList();
+
+  // ---------- notes ----------
+  const notes = [
+    ...D.notes,
+    "The 15 Oct report says 22 additional OK/PB records, but its per-system table adds up to 21.",
+    "The 13 Oct report shows 0 field-complete CPCLs awaiting CWA close. The next day, 4 previously OK System 50 CPCLs (5001-C04) appeared as OS.",
+    "The 12 Oct list holds " + lists.find((l) => l.name === "12 Oct list").rows.length + " signal rows across " + new Set(lists.find((l) => l.name === "12 Oct list").rows.map((r) => r.loop)).size + " loops (Systems 40, 50, 64). The 9 Oct list holds 43 AI signals, all Full RFCC, on RIO cabinets 87JF121–123.",
+    "System 82 figures are electrical panel I/O, at about 20 I/O per CPCL. Instrument loops have 1–5 I/O each, so I/O counts and CPCL counts trend differently.",
+  ];
+  document.getElementById("dnotes").innerHTML = notes.map((n) => `<li>${esc(n)}</li>`).join("");
+})();
+</script>
+</body>
+</html>

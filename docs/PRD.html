@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loops PRD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: single reading column with a sticky contents rail on wide screens. */
+:root {
+  --bg: #f4f6f9; --surface: #ffffff; --line: #e2e6ec; --ink: #0e1622; --ink-2: #4a5566; --ink-3: #6b7685; --accent: #2a78d6; --accent-soft: #e6f0fc;
+  --good: #0ca30c; --warning: #fab219; --critical: #d03b3b;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0d1117; --surface: #151a22; --line: #252c37; --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #0d1117; --surface: #151a22; --line: #252c37; --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.65 var(--font-sans); }
+.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; }
+@media (max-width: 860px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; } .toc { position: static !important; } }
+.toc { position: sticky; top: 24px; align-self: start; font-size: 13px; display: grid; gap: 4px; }
+.toc a { color: var(--ink-2); text-decoration: none; padding: 3px 0; }
+.toc a:hover { color: var(--accent); }
+.toc .eyebrow { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin-bottom: 6px; }
+article { min-width: 0; max-width: 72ch; }
+h1 { font-size: 32px; letter-spacing: -.02em; line-height: 1.15; margin: 0 0 8px; text-wrap: balance; }
+h2 { font-size: 20px; letter-spacing: -.01em; margin: 44px 0 10px; padding-top: 16px; border-top: 1px solid var(--line); text-wrap: balance; }
+h3 { font-size: 15px; margin: 22px 0 6px; }
+p, li { color: var(--ink-2); }
+strong { color: var(--ink); }
+code, .mono { font-family: var(--font-mono); font-size: .9em; }
+code { background: var(--surface); border: 1px solid var(--line); padding: 1px 5px; border-radius: 4px; }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 0; }
+.pill { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 10px; font-size: 12px; color: var(--ink-2); }
+.callout { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+.callout p { margin: 0; color: var(--ink); }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 12px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+td:first-child { color: var(--ink); font-weight: 500; }
+tr:last-child td { border-bottom: 0; }
+.pri { font: 600 11px var(--font-mono); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line); white-space: nowrap; }
+a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="toc" aria-label="Contents">
+    <div class="eyebrow">Contents</div>
+    <a href="#problem">1. Problem</a>
+    <a href="#users">2. Users</a>
+    <a href="#goals">3. Goals</a>
+    <a href="#scope">4. Scope</a>
+    <a href="#data">5. Data model</a>
+    <a href="#reqs">6. Requirements</a>
+    <a href="#metrics">7. Metric definitions</a>
+    <a href="#success">8. Success measures</a>
+    <a href="#roadmap">9. Roadmap</a>
+    <a href="#risks">10. Risks &amp; open questions</a>
+    <a href="../index.html">← Dashboard</a>
+  </nav>
+  <article>
+    <h1>Loops: loop testing progress dashboard</h1>
+    <p>Product requirements for turning the daily “Loop test daily Look Ahead” emails into one dashboard everyone can read.</p>
+    <div class="meta"><span class="pill">Draft v0.1</span><span class="pill">17 Oct 2026</span><span class="pill">Owner: Jaime Bourne</span><span class="pill">Project: Norfolk Vanguard ICT loop testing</span></div>
+
+    <h2 id="problem">1. Problem</h2>
+    <p>Loop testing progress reaches about 25 people across Aker Solutions, Siemens Energy, RWE and Drydocks World as a daily email. Each email restates the full status table and quotes every earlier day underneath it. By 17 Oct the thread holds seven messages and runs to over 2,000 lines of text.</p>
+    <p>That format makes three things hard:</p>
+    <ul>
+      <li><strong>Trends are invisible.</strong> Each email shows today's number and a one-line delta. Spotting that Punch B has gone from 20% to 46% of CWA records means reading six emails side by side.</li>
+      <li><strong>Mismatches hide in prose.</strong> The gap between field-complete loops and CWA records, and the loops counted in CWA before they are fully tested, only appear as comment text.</li>
+      <li><strong>Constraints lose their history.</strong> Wi-Fi, operator access and SCADA availability come back every day with slightly different wording, and nothing records when each was raised or whether it is fixed.</li>
+    </ul>
+    <div class="callout"><p><strong>Product goal:</strong> anyone on the distribution list can open one page and see in under a minute where testing stands, what changed since yesterday, and what is blocking closure.</p></div>
+
+    <h2 id="users">2. Users</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>User</th><th>Needs</th></tr></thead>
+      <tbody>
+        <tr><td>Commissioning lead (report author)</td><td>Publish the daily status once without retyping tables; see reconciliation gaps before sending.</td></tr>
+        <tr><td>Aker Solutions / JV management</td><td>Trend of commenced vs field complete vs CWA closure; Punch B exposure; resourcing such as the night shift.</td></tr>
+        <tr><td>Siemens Energy</td><td>Which systems and workstations are active, what needs operator or configuration support, and upcoming integration windows (ADG, CC2/CC3).</td></tr>
+        <tr><td>RWE (client)</td><td>Closure progress in CWA and open constraints that affect the schedule.</td></tr>
+        <tr><td>Drydocks World field teams</td><td>Today's loop list by system, package and RIO cabinet; outstanding I/O within commenced loops.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="goals">3. Goals and non-goals</h2>
+    <h3>Goals</h3>
+    <ul>
+      <li>One page with the latest KPIs, deltas against the previous report, and the trend since the first report.</li>
+      <li>Calculated findings: PB share, reconciliation backlog, I/O rate by system, work in progress.</li>
+      <li>System status board and a constraints log that keeps each constraint's raised date and status.</li>
+      <li>A searchable register of the loop lists published in the thread.</li>
+      <li>Repeatable: a new email goes in <code>source/</code>, one script rebuilds the data.</li>
+    </ul>
+    <h3>Non-goals for v1</h3>
+    <ul>
+      <li>Replacing the master tracker (SharePoint Excel) or CWA as the system of record.</li>
+      <li>Editing data in the dashboard.</li>
+      <li>Live connections to CWA, the tracker or SCADA. These are v3 (see roadmap).</li>
+    </ul>
+
+    <h2 id="scope">4. Scope (v1, built)</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Area</th><th>What ships</th></tr></thead>
+      <tbody>
+        <tr><td>KPI row</td><td>Loop refs commenced, field complete, recorded OK/PB in CWA, Punch B share, awaiting CWA close, HW I/O yesterday. Each has a delta and a sparkline.</td></tr>
+        <tr><td>Findings</td><td>Five computed statements, each with a severity stripe and a headline figure.</td></tr>
+        <tr><td>Throughput</td><td>Cumulative progress line chart; HW I/O per day stacked by system.</td></tr>
+        <tr><td>CWA close-out</td><td>OK vs PB stacked bars with PB share; today's pipeline; reconciliation backlog.</td></tr>
+        <tr><td>Systems</td><td>One card per system with status, I/O for 14–16 Oct, remaining scope from 13 Oct, and the latest note.</td></tr>
+        <tr><td>Constraints</td><td>Log sorted by status (open, partly fixed, no update, resolved) plus upcoming dates.</td></tr>
+        <tr><td>Loop register</td><td>The 9 Oct and 12 Oct lists, filterable by system and searchable by tag, loop or package.</td></tr>
+        <tr><td>Data notes</td><td>Definition changes and inconsistencies found in the source reports.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="data">5. Data model</h2>
+    <p><code>data/daily_reports.json</code> holds one record per report. Fields:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">progressThrough</td><td>Day the figures describe (the email is sent the next morning).</td></tr>
+        <tr><td class="mono">commenced</td><td>HW loop references with any testing started (cumulative).</td></tr>
+        <tr><td class="mono">fieldComplete</td><td>All HW I/O in the loop reference recorded complete.</td></tr>
+        <tr><td class="mono">partial / noIoYet</td><td>Commenced but not complete, split by whether any I/O is done.</td></tr>
+        <tr><td class="mono">cwaOk / cwaPb / cwaTotal</td><td>CPCLs recorded in CWA as OK, as Punch B, and both.</td></tr>
+        <tr><td class="mono">awaitingCwa</td><td>Field complete but still OS (outstanding) in CWA.</td></tr>
+        <tr><td class="mono">partialAlreadyInCwa</td><td>Partially tested but already OK/PB in CWA.</td></tr>
+        <tr><td class="mono">ioBySystem / cpclBySystem</td><td>Individual I/O completed and CPCLs signed that day, by system.</td></tr>
+        <tr><td class="mono">remainingScope</td><td>Loop refs and I/O left per system, where a report states them.</td></tr>
+      </tbody>
+    </table></div>
+    <p>It also holds <code>systems</code>, <code>constraints</code> and <code>milestones</code>. <code>scripts/build_data.py</code> parses the loop-list tables straight from the <code>.eml</code> into <code>data/loop_register.json</code> and bundles everything into <code>data/data.js</code> for the page.</p>
+
+    <h2 id="reqs">6. Requirements</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>ID</th><th>Requirement</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>R1</td><td>Show the latest value and the change against the previous report for each headline KPI.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R2</td><td>Chart cumulative commenced, field complete and CWA totals across all reports.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R3</td><td>Split CWA records into OK and PB and show PB share per day.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R4</td><td>Show daily HW I/O by system, keeping each system's colour across days.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R5</td><td>Compute findings from the data, not hand-written, so they update with each new report.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R6</td><td>Keep the raised date and current status for each constraint.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R7</td><td>Parse loop-list tables from the email automatically.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R8</td><td>Work as a static page: no server, opens from a file or any static host, readable on a phone, light and dark.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R9</td><td>Hover or focus on any chart mark shows the exact values.</td><td><span class="pri">Should</span></td></tr>
+        <tr><td>R10</td><td>Parse the daily KPI table from the email too, so no hand transcription is needed.</td><td><span class="pri">Should</span></td></tr>
+        <tr><td>R11</td><td>Flag reports whose figures do not reconcile before they are sent.</td><td><span class="pri">Should</span></td></tr>
+        <tr><td>R12</td><td>Import the master tracker export for per-loop status.</td><td><span class="pri">Could</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="metrics">7. Metric definitions</h2>
+    <ul>
+      <li><strong>Punch B share</strong> = <code>cwaPb / cwaTotal</code>.</li>
+      <li><strong>Work in progress</strong> = <code>commenced − fieldComplete</code>.</li>
+      <li><strong>Refs to reconcile</strong> = <code>awaitingCwa + partialAlreadyInCwa</code>.</li>
+      <li><strong>Unexplained CPCLs</strong> = <code>cwaTotal − (fieldComplete − awaitingCwa + partialAlreadyInCwa)</code>. It should be zero. It has been 1–2 on every day since 13 Oct.</li>
+      <li><strong>Non-82 I/O</strong> = daily I/O excluding System 82 electrical panels, which carry about 20 I/O per CPCL against 1–5 for instrument loops.</li>
+    </ul>
+
+    <h2 id="success">8. Success measures</h2>
+    <ul>
+      <li>The daily email can link to the dashboard instead of quoting the full table history.</li>
+      <li>Updating takes under 5 minutes: drop the email in, run the script, publish.</li>
+      <li>Reconciliation gaps are raised before the email goes out, and the unexplained-CPCL count reaches zero.</li>
+      <li>Constraints carry a status, so “still open after N days” can be seen at a glance.</li>
+    </ul>
+
+    <h2 id="roadmap">9. Roadmap</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Phase</th><th>Content</th></tr></thead>
+      <tbody>
+        <tr><td>v1 (now)</td><td>Static dashboard, transcribed KPIs, parsed loop lists, computed findings.</td></tr>
+        <tr><td>v1.1</td><td>Parse the KPI and per-system tables from each email (R10); pre-send reconciliation check (R11).</td></tr>
+        <tr><td>v2</td><td>Master tracker import: per-loop status, I/O outstanding per commenced loop, burn-down against total scope once known.</td></tr>
+        <tr><td>v3</td><td>Scheduled refresh from the shared mailbox or SharePoint; CC2/CC3 package readiness forecast view.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="risks">10. Risks and open questions</h2>
+    <ul>
+      <li><strong>Total scope is not in the emails.</strong> Without it the dashboard cannot show percent complete or a finish forecast. Can the tracker supply the full loop count per system?</li>
+      <li><strong>Definitions changed mid-series.</strong> In the 15 Oct report “CPCLs commenced” became “HW loop references commenced (reconciled tracker total)”. Earlier points may not be comparable.</li>
+      <li><strong>Hand transcription.</strong> v1 KPIs are typed from the emails and could carry typos until R10 lands.</li>
+      <li><strong>Distribution.</strong> The data names companies and people. Agree who may see the dashboard before sharing it beyond the current mailing list.</li>
+    </ul>
+  </article>
+</div>
+</body>
+</html>

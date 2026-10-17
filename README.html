@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loops README</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one reading column; file tree and steps as bordered blocks. */
+:root {
+  --bg: #f4f6f9; --surface: #ffffff; --line: #e2e6ec; --ink: #0e1622; --ink-2: #4a5566; --ink-3: #6b7685; --accent: #2a78d6;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0d1117; --surface: #151a22; --line: #252c37; --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #0d1117; --surface: #151a22; --line: #252c37; --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.65 var(--font-sans); }
+main { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 48px 80px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.mark { width: 36px; height: 36px; border-radius: 9px; background: var(--ink); display: grid; place-items: center; flex: none; }
+h1 { font-size: 30px; letter-spacing: -.02em; margin: 0; }
+h2 { font-size: 18px; margin: 36px 0 8px; }
+p, li { color: var(--ink-2); }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: .9em; background: var(--surface); border: 1px solid var(--line); padding: 1px 5px; border-radius: 4px; }
+pre { font: 13px/1.6 var(--font-mono); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; color: var(--ink); margin: 10px 0; }
+pre .c { color: var(--ink-3); }
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 24px 0 0; }
+.links a { display: block; text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; color: var(--ink); }
+.links a:hover { border-color: var(--accent); }
+.links b { display: block; font-weight: 600; }
+.links span { color: var(--ink-3); font-size: 13px; }
+ol { padding-left: 20px; display: grid; gap: 6px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 16 16"><path d="M5 4.5a3.5 3.5 0 1 0 0 7c1.6 0 2.4-1.1 3-2.2l.1-.2c.6-1.1 1.3-2.6 2.9-2.6a1.5 1.5 0 1 1 0 3" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+    <h1>Loops</h1>
+  </div>
+  <p>A dashboard for Norfolk Vanguard ICT loop testing. It turns the daily “Loop test daily Look Ahead” email thread into one page of KPIs, trends, system status, constraints and the planned loop lists.</p>
+
+  <div class="links">
+    <a href="index.html"><b>Open the dashboard</b><span>index.html</span></a>
+    <a href="docs/PRD.html"><b>Read the PRD</b><span>docs/PRD.html</span></a>
+    <a href="source/"><b>Source email</b><span>source/*.eml</span></a>
+  </div>
+
+  <h2>What's in the repo</h2>
+<pre>index.html                 <span class="c">dashboard (static, no build step)</span>
+README.html / README.md    <span class="c">this page</span>
+docs/PRD.html              <span class="c">product requirements</span>
+source/*.eml               <span class="c">the daily look-ahead email thread</span>
+data/daily_reports.json    <span class="c">daily KPIs, systems, constraints, milestones</span>
+data/loop_register.json    <span class="c">loop lists parsed from the email (generated)</span>
+data/data.js               <span class="c">bundle the dashboard loads (generated)</span>
+scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</span></pre>
+
+  <h2>View it</h2>
+  <p>Open <code>index.html</code> in a browser. It needs no server. Turn on GitHub Pages for the repo to share it as a link.</p>
+
+  <h2>Add a new daily report</h2>
+  <ol>
+    <li>Save the latest email from Outlook as <code>.eml</code> into <code>source/</code>.</li>
+    <li>Add a record to <code>days</code> in <code>data/daily_reports.json</code> with the figures from its “Loop Testing Status” table. Update <code>systems</code>, <code>constraints</code> and <code>milestones</code> if they changed.</li>
+    <li>Run the build. It uses only the Python standard library:
+<pre>python3 scripts/build_data.py</pre></li>
+    <li>Reload <code>index.html</code>. KPIs, deltas, charts and findings all recalculate from the data.</li>
+  </ol>
+
+  <h2>Reading the numbers</h2>
+  <ul>
+    <li><strong>CPCL</strong>: commissioning check list. <strong>CWA</strong>: the completions system where CPCLs are recorded.</li>
+    <li><strong>OK / PB / OS</strong>: accepted, accepted with Punch B, outstanding.</li>
+    <li>Each data point is dated by the day it describes. The email goes out the next morning.</li>
+    <li>The “Data notes” section of the dashboard lists definition changes and figures in the source emails that do not reconcile.</li>
+  </ul>
+
+  <h2>Handling</h2>
+  <p>The source email contains names and contact details of project staff from several companies. Keep the repository private and agree who may see it before sharing more widely.</p>
+</main>
+</body>
+</html>

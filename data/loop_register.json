@@ -1,0 +1,1910 @@
+{
+ "source": "source/2026-10-17_Re_Loop_test_daily_Look_Ahead.eml",
+ "lists": [
+  {
+   "sent": "Monday, October 12, 2026 7:11 AM",
+   "rows": [
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50PT0001",
+     "signal": "50PT0001",
+     "loop": "50-0001"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0002",
+     "signal": "50FY0002",
+     "loop": "50-0002"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0002",
+     "signal": "50UA0002",
+     "loop": "50-0002"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0002",
+     "signal": "50YS0002",
+     "loop": "50-0002"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0002",
+     "signal": "50ZT0002",
+     "loop": "50-0002"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50AT0008",
+     "signal": "50AT0008",
+     "loop": "50-0008"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50PT0021",
+     "signal": "50PT0021",
+     "loop": "50-0021"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0022",
+     "signal": "50FY0022",
+     "loop": "50-0022"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0022",
+     "signal": "50UA0022",
+     "loop": "50-0022"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0022",
+     "signal": "50YS0022",
+     "loop": "50-0022"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0022",
+     "signal": "50ZT0022",
+     "loop": "50-0022"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50AT0028",
+     "signal": "50AT0028",
+     "loop": "50-0028"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50PT0041",
+     "signal": "50PT0041",
+     "loop": "50-0041"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0042",
+     "signal": "50FY0042",
+     "loop": "50-0042"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0042",
+     "signal": "50UA0042",
+     "loop": "50-0042"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0042",
+     "signal": "50YS0042",
+     "loop": "50-0042"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50FV0042",
+     "signal": "50ZT0042",
+     "loop": "50-0042"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50AT0048",
+     "signal": "50AT0048",
+     "loop": "50-0048"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50QT0061",
+     "signal": "50QT0061",
+     "loop": "50-0061"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50AT0062",
+     "signal": "50AT0062",
+     "loop": "50-0062"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50TT0063",
+     "signal": "50TT0063",
+     "loop": "50-0063"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C04",
+     "mc": "5001-I014",
+     "tag": "50PT0065",
+     "signal": "50PT0065",
+     "loop": "50-0065"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50TT0230",
+     "signal": "50TT0230",
+     "loop": "50-0230"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253A",
+     "signal": "50PY0253A",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253B",
+     "signal": "50PY0253B",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253A",
+     "signal": "50UA0253A",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253B",
+     "signal": "50UA0253B",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253A",
+     "signal": "50YS0253A",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253B",
+     "signal": "50YS0253B",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253A",
+     "signal": "50ZT0253A",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50PV0253B",
+     "signal": "50ZT0253B",
+     "loop": "50-0253"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C07",
+     "mc": "5001-I007",
+     "tag": "50TT0254",
+     "signal": "50TT0254",
+     "loop": "50-0254"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50AT0171A",
+     "signal": "50AT0171A",
+     "loop": "50-0171"
+    },
+    {
+     "group": "ACS",
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50AT0171B",
+     "signal": "50AT0171B",
+     "loop": "50-0171"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0020",
+     "signal": "40TT0020",
+     "loop": "40-0020"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0060",
+     "signal": "40ZS0060",
+     "loop": "40-0060"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0061",
+     "signal": "40FT0061",
+     "loop": "40-0061"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0062",
+     "signal": "40PT0062",
+     "loop": "40-0062"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0064",
+     "signal": "40TT0064",
+     "loop": "40-0064"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0064",
+     "signal": "40TY0064",
+     "loop": "40-0064"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0064",
+     "signal": "40UA0064",
+     "loop": "40-0064"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0064",
+     "signal": "40YS0064",
+     "loop": "40-0064"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0064",
+     "signal": "40ZT0064",
+     "loop": "40-0064"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0065",
+     "signal": "40ZS0065",
+     "loop": "40-0065"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0066",
+     "signal": "40FT0066",
+     "loop": "40-0066"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0067",
+     "signal": "40PT0067",
+     "loop": "40-0067"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0069",
+     "signal": "40TT0069",
+     "loop": "40-0069"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0069",
+     "signal": "40TY0069",
+     "loop": "40-0069"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0069",
+     "signal": "40UA0069",
+     "loop": "40-0069"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0069",
+     "signal": "40YS0069",
+     "loop": "40-0069"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0069",
+     "signal": "40ZT0069",
+     "loop": "40-0069"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0070",
+     "signal": "40ZS0070",
+     "loop": "40-0070"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0071",
+     "signal": "40FT0071",
+     "loop": "40-0071"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0072",
+     "signal": "40PT0072",
+     "loop": "40-0072"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0074",
+     "signal": "40TT0074",
+     "loop": "40-0074"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0074",
+     "signal": "40TY0074",
+     "loop": "40-0074"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0074",
+     "signal": "40UA0074",
+     "loop": "40-0074"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0074",
+     "signal": "40YS0074",
+     "loop": "40-0074"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0074",
+     "signal": "40ZT0074",
+     "loop": "40-0074"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0075",
+     "signal": "40ZS0075",
+     "loop": "40-0075"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0076",
+     "signal": "40FT0076",
+     "loop": "40-0076"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0077",
+     "signal": "40PT0077",
+     "loop": "40-0077"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0079",
+     "signal": "40TT0079",
+     "loop": "40-0079"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0079",
+     "signal": "40TY0079",
+     "loop": "40-0079"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0079",
+     "signal": "40UA0079",
+     "loop": "40-0079"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0079",
+     "signal": "40YS0079",
+     "loop": "40-0079"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0079",
+     "signal": "40ZT0079",
+     "loop": "40-0079"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0082A",
+     "signal": "40FT0082A",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0082B",
+     "signal": "40FT0082B",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082A",
+     "signal": "40FY0082A",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082B",
+     "signal": "40FY0082B",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082A",
+     "signal": "40UA0082A",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082B",
+     "signal": "40UA0082B",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082A",
+     "signal": "40YS0082A",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082B",
+     "signal": "40YS0082B",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082A",
+     "signal": "40ZT0082A",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0082B",
+     "signal": "40ZT0082B",
+     "loop": "40-0082"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0083",
+     "signal": "40PT0083",
+     "loop": "40-0083"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0084",
+     "signal": "40TT0084",
+     "loop": "40-0084"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0088",
+     "signal": "40ZS0088",
+     "loop": "40-0088"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0089",
+     "signal": "40FT0089",
+     "loop": "40-0089"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0089",
+     "signal": "40FY0089",
+     "loop": "40-0089"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0089",
+     "signal": "40UA0089",
+     "loop": "40-0089"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0089",
+     "signal": "40YS0089",
+     "loop": "40-0089"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0089",
+     "signal": "40ZT0089",
+     "loop": "40-0089"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0090",
+     "signal": "40PT0090",
+     "loop": "40-0090"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0091",
+     "signal": "40TT0091",
+     "loop": "40-0091"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0094",
+     "signal": "40ZS0094",
+     "loop": "40-0094"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0096",
+     "signal": "40FT0096",
+     "loop": "40-0096"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0096",
+     "signal": "40FY0096",
+     "loop": "40-0096"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0096",
+     "signal": "40UA0096",
+     "loop": "40-0096"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0096",
+     "signal": "40YS0096",
+     "loop": "40-0096"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0096",
+     "signal": "40ZT0096",
+     "loop": "40-0096"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0097",
+     "signal": "40PT0097",
+     "loop": "40-0097"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0098",
+     "signal": "40TT0098",
+     "loop": "40-0098"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0100",
+     "signal": "40ZS0100",
+     "loop": "40-0100"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0102",
+     "signal": "40FT0102",
+     "loop": "40-0102"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0102",
+     "signal": "40FY0102",
+     "loop": "40-0102"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0102",
+     "signal": "40UA0102",
+     "loop": "40-0102"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0102",
+     "signal": "40YS0102",
+     "loop": "40-0102"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0102",
+     "signal": "40ZT0102",
+     "loop": "40-0102"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0103",
+     "signal": "40PT0103",
+     "loop": "40-0103"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0104",
+     "signal": "40TT0104",
+     "loop": "40-0104"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0115",
+     "signal": "40ZS0115",
+     "loop": "40-0115"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0116",
+     "signal": "40FT0116",
+     "loop": "40-0116"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0117",
+     "signal": "40PT0117",
+     "loop": "40-0117"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0119",
+     "signal": "40TT0119",
+     "loop": "40-0119"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0119",
+     "signal": "40TY0119",
+     "loop": "40-0119"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0119",
+     "signal": "40UA0119",
+     "loop": "40-0119"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0119",
+     "signal": "40YS0119",
+     "loop": "40-0119"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0119",
+     "signal": "40ZT0119",
+     "loop": "40-0119"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0120",
+     "signal": "40ZS0120",
+     "loop": "40-0120"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0121",
+     "signal": "40FT0121",
+     "loop": "40-0121"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0122",
+     "signal": "40PT0122",
+     "loop": "40-0122"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0124",
+     "signal": "40TT0124",
+     "loop": "40-0124"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0124",
+     "signal": "40TY0124",
+     "loop": "40-0124"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0124",
+     "signal": "40UA0124",
+     "loop": "40-0124"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0124",
+     "signal": "40YS0124",
+     "loop": "40-0124"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0124",
+     "signal": "40ZT0124",
+     "loop": "40-0124"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0125",
+     "signal": "40ZS0125",
+     "loop": "40-0125"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0126",
+     "signal": "40FT0126",
+     "loop": "40-0126"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0127",
+     "signal": "40PT0127",
+     "loop": "40-0127"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0129",
+     "signal": "40TT0129",
+     "loop": "40-0129"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0129",
+     "signal": "40TY0129",
+     "loop": "40-0129"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0129",
+     "signal": "40UA0129",
+     "loop": "40-0129"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0129",
+     "signal": "40YS0129",
+     "loop": "40-0129"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0129",
+     "signal": "40ZT0129",
+     "loop": "40-0129"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40ZS0130",
+     "signal": "40ZS0130",
+     "loop": "40-0130"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0131",
+     "signal": "40FT0131",
+     "loop": "40-0131"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0132",
+     "signal": "40PT0132",
+     "loop": "40-0132"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TT0134",
+     "signal": "40TT0134",
+     "loop": "40-0134"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0134",
+     "signal": "40TY0134",
+     "loop": "40-0134"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0134",
+     "signal": "40UA0134",
+     "loop": "40-0134"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0134",
+     "signal": "40YS0134",
+     "loop": "40-0134"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40TV0134",
+     "signal": "40ZT0134",
+     "loop": "40-0134"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0136A",
+     "signal": "40FT0136A",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FT0136B",
+     "signal": "40FT0136B",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136A",
+     "signal": "40FY0136A",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136B",
+     "signal": "40FY0136B",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136A",
+     "signal": "40UA0136A",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136B",
+     "signal": "40UA0136B",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136A",
+     "signal": "40YS0136A",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136B",
+     "signal": "40YS0136B",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136A",
+     "signal": "40ZT0136A",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40FV0136B",
+     "signal": "40ZT0136B",
+     "loop": "40-0136"
+    },
+    {
+     "group": "ACS",
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C01",
+     "mc": "4001-I001",
+     "tag": "40PT0137",
+     "signal": "40PT0137",
+     "loop": "40-0137"
+    },
+    {
+     "group": "ACS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I001",
+     "tag": "64PT0001",
+     "signal": "64PT0001",
+     "loop": "64-0001"
+    },
+    {
+     "group": "ACS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002",
+     "tag": "64ZS0005A",
+     "signal": "64ZS0005A",
+     "loop": "64-0005"
+    },
+    {
+     "group": "ACS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002",
+     "tag": "64ZS0005B",
+     "signal": "64ZS0005B",
+     "loop": "64-0005"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I001",
+     "tag": "64PST0003",
+     "signal": "64PST0003",
+     "loop": "64-0003"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64UA0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64XY0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64XYH0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64XYL0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64YS0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64ZS0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64ZSH0004",
+     "loop": "64-0004"
+    },
+    {
+     "group": "HACCS",
+     "system": "System 64",
+     "comm": "6401-C01",
+     "mc": "6401-I002; 6401-I001",
+     "tag": "64XSV0004",
+     "signal": "64ZSL0004",
+     "loop": "64-0004"
+    }
+   ]
+  },
+  {
+   "sent": "Friday, October 09, 2026 6:58 AM",
+   "rows": [
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C05",
+     "mc": "5001-I005",
+     "tag": "50PDT0074",
+     "signal": "50PDT0074",
+     "loop": "50-0074",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C05",
+     "mc": "5001-I005",
+     "tag": "50PDT0084",
+     "signal": "50PDT0084",
+     "loop": "50-0084",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C05",
+     "mc": "5001-I005",
+     "tag": "50LT0833",
+     "signal": "50LT0833",
+     "loop": "50-0833",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C05",
+     "mc": "5001-I005",
+     "tag": "50LT0834",
+     "signal": "50LT0834",
+     "loop": "50-0834",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50FT0091",
+     "signal": "50FT0091",
+     "loop": "50-0091",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50TT0093",
+     "signal": "50TT0093",
+     "loop": "50-0093",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50PT0122",
+     "signal": "50PT0122",
+     "loop": "50-0122",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50PT0142",
+     "signal": "50PT0142",
+     "loop": "50-0142",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50PT0202",
+     "signal": "50PT0202",
+     "loop": "50-0202",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C06",
+     "mc": "5001-I016",
+     "tag": "50PT0222",
+     "signal": "50PT0222",
+     "loop": "50-0222",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50TT0105",
+     "signal": "50TT0105",
+     "loop": "50-0105",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50PT0106",
+     "signal": "50PT0106",
+     "loop": "50-0106",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I031",
+     "tag": "50FT0111",
+     "signal": "50FT0111",
+     "loop": "50-0111",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50TT0125",
+     "signal": "50TT0125",
+     "loop": "50-0125",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50PT0126",
+     "signal": "50PT0126",
+     "loop": "50-0126",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I031",
+     "tag": "50FT0131",
+     "signal": "50FT0131",
+     "loop": "50-0131",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50TT0145",
+     "signal": "50TT0145",
+     "loop": "50-0145",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I031",
+     "tag": "50FT0151",
+     "signal": "50FT0151",
+     "loop": "50-0151",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C21",
+     "mc": "5001-I021",
+     "tag": "50TT0172",
+     "signal": "50TT0172",
+     "loop": "50-0172",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C02",
+     "mc": "4001-I002",
+     "tag": "40PT0002",
+     "signal": "40PT0002",
+     "loop": "40-0002",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C02",
+     "mc": "4001-I002",
+     "tag": "40FT0003",
+     "signal": "40FT0003",
+     "loop": "40-0003",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C02",
+     "mc": "4001-I002",
+     "tag": "40PT0012",
+     "signal": "40PT0012",
+     "loop": "40-0012",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C02",
+     "mc": "4001-I002",
+     "tag": "40LT0911",
+     "signal": "40LT0911",
+     "loop": "40-0911",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C03",
+     "mc": "4001-I003",
+     "tag": "40LT0912",
+     "signal": "40LT0912",
+     "loop": "40-0912-TEMP",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C04",
+     "mc": "4001-I004",
+     "tag": "40PT0008",
+     "signal": "40PT0008",
+     "loop": "40-0008",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C04",
+     "mc": "4001-I004",
+     "tag": "40FT0009",
+     "signal": "40FT0009",
+     "loop": "40-0009",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C04",
+     "mc": "4001-I004",
+     "tag": "40PT0016",
+     "signal": "40PT0016",
+     "loop": "40-0016",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C04",
+     "mc": "4001-I004",
+     "tag": "40LT0913",
+     "signal": "40LT0913",
+     "loop": "40-0913",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40PT0021",
+     "signal": "40PT0021",
+     "loop": "40-0021",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40TT0043A",
+     "signal": "40TT0043A",
+     "loop": "40-0043",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40TT0043B",
+     "signal": "40TT0043B",
+     "loop": "40-0043",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40PT0050",
+     "signal": "40PT0050",
+     "loop": "40-0050",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40TT0051",
+     "signal": "40TT0051",
+     "loop": "40-0051",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40PT0105",
+     "signal": "40PT0105",
+     "loop": "40-0105",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40TT0106",
+     "signal": "40TT0106",
+     "loop": "40-0106",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C05",
+     "mc": "4001-I005",
+     "tag": "40TT0167",
+     "signal": "40TT0167",
+     "loop": "40-0167",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C06",
+     "mc": "4001-I006",
+     "tag": "40PT0023",
+     "signal": "40PT0023",
+     "loop": "40-0023",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C06",
+     "mc": "4001-I006",
+     "tag": "40PT0026",
+     "signal": "40PT0026",
+     "loop": "40-0026",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C06",
+     "mc": "4001-I006",
+     "tag": "40FT0170",
+     "signal": "40FT0170",
+     "loop": "40-0170",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C06",
+     "mc": "4001-I006",
+     "tag": "40LT0914",
+     "signal": "40LT0914",
+     "loop": "40-0914",
+     "rio": "87JF123",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 40 – Cooling Medium",
+     "comm": "4001-C17",
+     "mc": "4001-I017",
+     "tag": "40LT0114",
+     "signal": "40LT0114",
+     "loop": "40-0114",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C08",
+     "mc": "5001-I008",
+     "tag": "50LT0831",
+     "signal": "50LT0831",
+     "loop": "50-0831",
+     "rio": "87JF121",
+     "rfcc": "Full",
+     "io": "AI"
+    },
+    {
+     "system": "System 50 – Seawater",
+     "comm": "5001-C09",
+     "mc": "5001-I009",
+     "tag": "50LT0832",
+     "signal": "50LT0832",
+     "loop": "50-0832",
+     "rio": "87JF122",
+     "rfcc": "Full",
+     "io": "AI"
+    }
+   ]
+  }
+ ]
+}
