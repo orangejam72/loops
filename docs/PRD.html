@@ -57,15 +57,17 @@ a { color: var(--accent); }
     <a href="#data">5. Data model</a>
     <a href="#reqs">6. Requirements</a>
     <a href="#metrics">7. Metric definitions</a>
-    <a href="#success">8. Success measures</a>
-    <a href="#roadmap">9. Roadmap</a>
-    <a href="#risks">10. Risks &amp; open questions</a>
+    <a href="#hosting">8. Hosting &amp; access</a>
+    <a href="#success">9. Success measures</a>
+    <a href="#roadmap">10. Roadmap</a>
+    <a href="#risks">11. Risks &amp; open questions</a>
+    <a href="#changes">12. Change log</a>
     <a href="../index.html">← Dashboard</a>
   </nav>
   <article>
     <h1>Loops: loop testing progress dashboard</h1>
     <p>Product requirements for turning the daily “Loop test daily Look Ahead” emails into one dashboard everyone can read.</p>
-    <div class="meta"><span class="pill">Draft v0.1</span><span class="pill">17 Oct 2026</span><span class="pill">Owner: Jaime Bourne</span><span class="pill">Project: Norfolk Vanguard ICT loop testing</span></div>
+    <div class="meta"><span class="pill">Draft v0.2</span><span class="pill">17 Oct 2026</span><span class="pill">Owner: Jaime Bourne</span><span class="pill">Project: Norfolk Vanguard ICT loop testing</span></div>
 
     <h2 id="problem">1. Problem</h2>
     <p>Loop testing progress reaches about 25 people across Aker Solutions, Siemens Energy, RWE and Drydocks World as a daily email. Each email restates the full status table and quotes every earlier day underneath it. By 17 Oct the thread holds seven messages and runs to over 2,000 lines of text.</p>
@@ -153,7 +155,10 @@ a { color: var(--accent); }
         <tr><td>R9</td><td>Hover or focus on any chart mark shows the exact values.</td><td><span class="pri">Should</span></td></tr>
         <tr><td>R10</td><td>Parse the daily KPI table from the email too, so no hand transcription is needed.</td><td><span class="pri">Should</span></td></tr>
         <tr><td>R11</td><td>Flag reports whose figures do not reconcile before they are sent.</td><td><span class="pri">Should</span></td></tr>
-        <tr><td>R12</td><td>Import the master tracker export for per-loop status.</td><td><span class="pri">Could</span></td></tr>
+        <tr><td>R12</td><td>Deploy on Vercel with no build step; every push to the production branch redeploys.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R13</td><td>Never publish the raw email or its contact details on the hosted site.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R14</td><td>Only invited people can open the hosted site, and search engines cannot index it.</td><td><span class="pri">Must</span></td></tr>
+        <tr><td>R15</td><td>Import the master tracker export for per-loop status.</td><td><span class="pri">Could</span></td></tr>
       </tbody>
     </table></div>
 
@@ -166,7 +171,21 @@ a { color: var(--accent); }
       <li><strong>Non-82 I/O</strong> = daily I/O excluding System 82 electrical panels, which carry about 20 I/O per CPCL against 1–5 for instrument loops.</li>
     </ul>
 
-    <h2 id="success">8. Success measures</h2>
+    <h2 id="hosting">8. Hosting and access</h2>
+    <p>The dashboard is hosted on Vercel as a static site straight from <code>orangejam72/loops</code>.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Concern</th><th>Approach</th></tr></thead>
+      <tbody>
+        <tr><td>Build</td><td>None. <code>data/data.js</code> is generated locally by <code>scripts/build_data.py</code> and committed. Vercel serves the repo root as-is (Framework Preset: Other).</td></tr>
+        <tr><td>Releases</td><td>A push to the production branch deploys to production. Other branches get preview URLs to check before merging.</td></tr>
+        <tr><td>Routes</td><td><code>/</code> dashboard, <code>/prd</code> this document, <code>/readme</code> setup guide. Clean URLs, no trailing slash.</td></tr>
+        <tr><td>Data exposure</td><td><code>.vercelignore</code> keeps <code>source/</code> and <code>scripts/</code> off the deployed site, so the raw email and its contact details are never served (R13).</td></tr>
+        <tr><td>Access</td><td>Vercel Deployment Protection (Vercel Authentication or password) limits viewers to invited people. <code>X-Robots-Tag: noindex</code> and <code>robots.txt</code> block indexing (R14).</td></tr>
+        <tr><td>Freshness</td><td><code>data/</code> is served with <code>must-revalidate</code>, so viewers get a new report straight after deploy.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="success">9. Success measures</h2>
     <ul>
       <li>The daily email can link to the dashboard instead of quoting the full table history.</li>
       <li>Updating takes under 5 minutes: drop the email in, run the script, publish.</li>
@@ -174,24 +193,34 @@ a { color: var(--accent); }
       <li>Constraints carry a status, so “still open after N days” can be seen at a glance.</li>
     </ul>
 
-    <h2 id="roadmap">9. Roadmap</h2>
+    <h2 id="roadmap">10. Roadmap</h2>
     <div class="tbl"><table>
       <thead><tr><th>Phase</th><th>Content</th></tr></thead>
       <tbody>
-        <tr><td>v1 (now)</td><td>Static dashboard, transcribed KPIs, parsed loop lists, computed findings.</td></tr>
-        <tr><td>v1.1</td><td>Parse the KPI and per-system tables from each email (R10); pre-send reconciliation check (R11).</td></tr>
-        <tr><td>v2</td><td>Master tracker import: per-loop status, I/O outstanding per commenced loop, burn-down against total scope once known.</td></tr>
+        <tr><td>v1 (now)</td><td>Static dashboard, transcribed KPIs, parsed loop lists, computed findings. Hosted on Vercel with deployment protection.</td></tr>
+        <tr><td>v1.1</td><td>Parse the KPI and per-system tables from each email (R10); pre-send reconciliation check (R11). Run <code>build_data.py</code> in a GitHub Action so a pushed <code>.eml</code> is enough to update the site.</td></tr>
+        <tr><td>v2</td><td>Master tracker import (R15): per-loop status, I/O outstanding per commenced loop, burn-down against total scope once known.</td></tr>
         <tr><td>v3</td><td>Scheduled refresh from the shared mailbox or SharePoint; CC2/CC3 package readiness forecast view.</td></tr>
       </tbody>
     </table></div>
 
-    <h2 id="risks">10. Risks and open questions</h2>
+    <h2 id="risks">11. Risks and open questions</h2>
     <ul>
       <li><strong>Total scope is not in the emails.</strong> Without it the dashboard cannot show percent complete or a finish forecast. Can the tracker supply the full loop count per system?</li>
       <li><strong>Definitions changed mid-series.</strong> In the 15 Oct report “CPCLs commenced” became “HW loop references commenced (reconciled tracker total)”. Earlier points may not be comparable.</li>
       <li><strong>Hand transcription.</strong> v1 KPIs are typed from the emails and could carry typos until R10 lands.</li>
       <li><strong>Distribution.</strong> The data names companies and people. Agree who may see the dashboard before sharing it beyond the current mailing list.</li>
+      <li><strong>Hosting approval.</strong> Vercel is a third-party host. Confirm that project data may sit there, or keep the site on Deployment Protection with a short invite list.</li>
     </ul>
+
+    <h2 id="changes">12. Change log</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>v0.2</td><td class="mono">2026-10-17</td><td>Added Vercel hosting and access (section 8), requirements R12–R14, and the GitHub Action step to v1.1.</td></tr>
+        <tr><td>v0.1</td><td class="mono">2026-10-17</td><td>First draft from the 9–17 Oct look-ahead thread.</td></tr>
+      </tbody>
+    </table></div>
   </article>
 </div>
 </body>

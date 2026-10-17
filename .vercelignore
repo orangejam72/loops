@@ -1,0 +1,5 @@
+# Keep the raw email (names, addresses, phone numbers) and tooling off the deployed site.
+source/
+scripts/
+*.eml
+README.md

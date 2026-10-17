@@ -47,7 +47,7 @@ ol { padding-left: 20px; display: grid; gap: 6px; }
   <div class="links">
     <a href="index.html"><b>Open the dashboard</b><span>index.html</span></a>
     <a href="docs/PRD.html"><b>Read the PRD</b><span>docs/PRD.html</span></a>
-    <a href="source/"><b>Source email</b><span>source/*.eml</span></a>
+    <a href="https://github.com/orangejam72/loops"><b>Repository</b><span>orangejam72/loops</span></a>
   </div>
 
   <h2>What's in the repo</h2>
@@ -58,10 +58,33 @@ source/*.eml               <span class="c">the daily look-ahead email thread</sp
 data/daily_reports.json    <span class="c">daily KPIs, systems, constraints, milestones</span>
 data/loop_register.json    <span class="c">loop lists parsed from the email (generated)</span>
 data/data.js               <span class="c">bundle the dashboard loads (generated)</span>
-scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</span></pre>
+scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</span>
+vercel.json                <span class="c">routes and headers for Vercel</span>
+.vercelignore              <span class="c">keeps source/ and scripts/ off the deployed site</span>
+robots.txt                 <span class="c">blocks search crawlers</span></pre>
 
-  <h2>View it</h2>
-  <p>Open <code>index.html</code> in a browser. It needs no server. Turn on GitHub Pages for the repo to share it as a link.</p>
+  <h2>View it locally</h2>
+  <p>Open <code>index.html</code> in a browser. It needs no server and no build.</p>
+
+  <h2>Deploy to Vercel</h2>
+  <p>The repo is a static site and is ready for Vercel as it stands. There is no build step: <code>data/data.js</code> is committed, so Vercel serves the files directly.</p>
+  <ol>
+    <li>In Vercel, choose <strong>Add New → Project</strong> and import <code>orangejam72/loops</code>.</li>
+    <li>Leave <strong>Framework Preset</strong> as <em>Other</em>, and leave the build and output settings empty.</li>
+    <li>Deploy. Every push to the production branch redeploys, and every other branch gets a preview URL.</li>
+    <li>Under <strong>Settings → Deployment Protection</strong>, turn on Vercel Authentication (or password protection) so only invited people can open it.</li>
+  </ol>
+  <p>Or from a terminal: <code>npx vercel</code> for a preview, <code>npx vercel --prod</code> for production.</p>
+<pre><span class="c"># routes on the deployed site</span>
+/          dashboard
+/prd       product requirements
+/readme    this page</pre>
+  <p>What the config does:</p>
+  <ul>
+    <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes, <code>noindex</code> and basic security headers, and no caching on <code>data/</code>, so a new report appears straight after deploy.</li>
+    <li><code>.vercelignore</code> keeps <code>source/</code> (the raw email with contact details) and <code>scripts/</code> off the deployed site. They stay in the repo.</li>
+    <li><code>robots.txt</code> asks search engines not to crawl the site.</li>
+  </ul>
 
   <h2>Add a new daily report</h2>
   <ol>
@@ -70,6 +93,7 @@ scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</s
     <li>Run the build. It uses only the Python standard library:
 <pre>python3 scripts/build_data.py</pre></li>
     <li>Reload <code>index.html</code>. KPIs, deltas, charts and findings all recalculate from the data.</li>
+    <li>Commit and push. Vercel redeploys automatically.</li>
   </ol>
 
   <h2>Reading the numbers</h2>
@@ -81,7 +105,7 @@ scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</s
   </ul>
 
   <h2>Handling</h2>
-  <p>The source email contains names and contact details of project staff from several companies. Keep the repository private and agree who may see it before sharing more widely.</p>
+  <p>The source email contains names and contact details of project staff from several companies. Keep the repository private. The deployed site leaves out the raw email, but the dashboard still names companies, systems and tags, so keep Deployment Protection on and agree who may see it before sharing more widely.</p>
 </main>
 </body>
 </html>
