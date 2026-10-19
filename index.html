@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Loops Dashboard</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<script src="assets/theme.js"></script>
 <style>
 /* Layout: sticky product bar, then a 12-col grid of panels: KPIs → findings → trend charts → systems → constraints → register. */
 :root {
@@ -167,7 +166,35 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .count { color: var(--ink-3); font-size: 12px; margin-left: auto; }
 .notes { margin: 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 6px; max-width: 90ch; }
 .foot { color: var(--ink-3); font-size: 12px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+
+/* actions: theme switch and exports */
+.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.theme { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; padding: 2px; background: var(--surface-2); }
+.theme button { border: 0; background: transparent; font: 500 12px var(--font-sans); color: var(--ink-2); padding: 4px 9px; border-radius: 6px; cursor: pointer; }
+.theme button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+.btn { display: inline-flex; align-items: center; gap: 6px; font: 500 12.5px var(--font-sans); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 8px; padding: 5px 10px; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--accent); }
+.btn svg { width: 14px; height: 14px; }
+.theme button:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* print / PDF: light, full-length, no controls */
+@page { size: A4 landscape; margin: 10mm; }
+@media print {
+  body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body::before, .bar nav, .actions, .filters, .tip { display: none !important; }
+  .bar { position: static; border-bottom: 1px solid var(--line); }
+  .wrap { padding-block: 12px 0; max-width: none; }
+  .card { box-shadow: none; }
+  .card:has(.chart), .card:has(.funnel), .finding, .sys, .ms, tr, .kpi { break-inside: avoid; }
+  .section-label { break-after: avoid; }
+  .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+  .span-8 { grid-column: span 8; } .span-7 { grid-column: span 7; } .span-5 { grid-column: span 5; } .span-4 { grid-column: span 4; }
+  .grid, .wrap { gap: 12px; }
+  .reg-table { display: none; }
+  .reg-print { display: block !important; color: var(--ink-2); }
+  .page-break { break-before: page; }
+}
 </style>
 </head>
 <body>
@@ -187,6 +214,16 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       <a href="#register">Loop register</a>
       <a href="#notes">Data notes</a>
     </nav>
+    <div class="actions">
+      <div class="theme" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-set="system" title="Follow your device setting">Auto</button>
+        <button type="button" data-theme-set="light">Light</button>
+        <button type="button" data-theme-set="dark">Dark</button>
+      </div>
+      <a class="btn" href="exports/loops-dashboard.pdf" download data-online-only><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg>PDF</a>
+      <a class="btn" href="exports/loops-dashboard-offline.html" download data-online-only>Offline page</a>
+      <button type="button" class="btn" id="print-btn">Print</button>
+    </div>
   </div>
 </header>
 
@@ -240,7 +277,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     </section>
   </div>
 
-  <div class="section-label" id="systems">Systems</div>
+  <div class="section-label page-break" id="systems">Systems</div>
   <section class="card">
     <div class="card-h"><h2>Workfront by system</h2><span class="sub" id="sys-sub"></span></div>
     <div class="card-b"><div class="systems" id="sysgrid"></div></div>
@@ -271,7 +308,8 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
         <input type="search" id="f-q" placeholder="Search tag, loop or package" aria-label="Search loops">
         <span class="count" id="f-count"></span>
       </div>
-      <div class="tbl-wrap scroll"><table>
+      <p class="reg-print" id="reg-print" hidden></p>
+      <div class="tbl-wrap scroll reg-table"><table>
         <thead id="reg-h"></thead>
         <tbody id="reg-b"></tbody>
       </table></div>
@@ -286,7 +324,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   </section>
 
   <div class="foot">
-    <span>Source: “Loop test daily Look Ahead” email thread, 9–18 Oct 2026. <a href="docs/PRD.html">PRD</a> · <a href="README.html">README</a></span>
+    <span>Source: “Loop test daily Look Ahead” email thread, 9–18 Oct 2026. <span data-online-only><a href="docs/PRD.html">PRD</a> · <a href="README.html">README</a></span></span>
     <span>CPCL = commissioning check list · CWA = completions system · OK / PB / OS = accepted / Punch B / outstanding</span>
   </div>
 </main>
@@ -527,6 +565,9 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   renderCharts();
   let rz; new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(renderCharts, 80); }).observe(document.querySelector(".wrap"));
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderCharts);
+  window.addEventListener("beforeprint", renderCharts);
+  window.addEventListener("afterprint", renderCharts);
+  document.getElementById("print-btn").addEventListener("click", () => window.print());
   new MutationObserver(renderCharts).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
   // ---------- funnel ----------
@@ -604,6 +645,8 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     const loops = new Set(rows.map((r) => r.loop)).size;
     document.getElementById("f-count").textContent = `${rows.length} signals · ${loops} loops`;
   }
+  const regPrint = lists.map((l) => `${l.name}: ${l.rows.length} signals across ${new Set(l.rows.map((r) => r.loop)).size} loops`).join(" · ");
+  document.getElementById("reg-print").textContent = `${regPrint}. The full searchable lists are in the online dashboard and the offline page.`;
   fs.addEventListener("change", renderReg); fq.addEventListener("input", renderReg);
   syncList();
 

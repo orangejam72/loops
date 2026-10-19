@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Loops README</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<script src="assets/theme.js"></script>
 <style>
 /* Layout: one reading column; file tree and steps as bordered blocks. */
 :root {
@@ -34,19 +35,28 @@ pre .c { color: var(--ink-3); }
 .links b { display: block; font-weight: 600; }
 .links span { color: var(--ink-3); font-size: 13px; }
 ol { padding-left: 20px; display: grid; gap: 6px; }
+.themebar { display: flex; justify-content: flex-end; }
+.theme { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; padding: 2px; background: var(--surface); }
+.theme button { border: 0; background: transparent; font: 500 12px var(--font-sans); color: var(--ink-2); padding: 4px 9px; border-radius: 6px; cursor: pointer; }
+.theme button[aria-pressed="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+.theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print { .themebar { display: none; } body { background: #fff; } }
 </style>
 </head>
 <body>
 <main>
+  <div class="themebar"><div class="theme" role="group" aria-label="Colour theme"><button type="button" data-theme-set="system" title="Follow your device setting">Auto</button><button type="button" data-theme-set="light">Light</button><button type="button" data-theme-set="dark">Dark</button></div></div>
   <div class="brand">
     <span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 16 16"><path d="M5 4.5a3.5 3.5 0 1 0 0 7c1.6 0 2.4-1.1 3-2.2l.1-.2c.6-1.1 1.3-2.6 2.9-2.6a1.5 1.5 0 1 1 0 3" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></span>
     <h1>Loops</h1>
   </div>
-  <p>A dashboard for Norfolk Vanguard ICT loop testing. It turns the daily “Loop test daily Look Ahead” email thread into one page of KPIs, trends, system status, constraints and the planned loop lists.</p>
+  <p>A dashboard for Norfolk Vanguard ICT loop testing. It turns the daily “Loop test daily Look Ahead” email thread into one page of KPIs, trends, system status, constraints and the planned loop lists. It works in light and dark mode, exports to PDF and a single offline web page, and is hosted on Vercel behind a login with a share link for guests.</p>
 
   <div class="links">
     <a href="index.html"><b>Open the dashboard</b><span>index.html</span></a>
     <a href="docs/PRD.html"><b>Read the PRD</b><span>docs/PRD.html</span></a>
+    <a href="exports/loops-dashboard.pdf"><b>Download the PDF</b><span>exports/loops-dashboard.pdf</span></a>
+    <a href="exports/loops-dashboard-offline.html"><b>Offline page</b><span>one file, no internet needed</span></a>
     <a href="https://github.com/orangejam72/loops"><b>Repository</b><span>orangejam72/loops</span></a>
   </div>
 
@@ -58,7 +68,12 @@ source/*.eml               <span class="c">the daily look-ahead email thread</sp
 data/daily_reports.json    <span class="c">daily KPIs, systems, constraints, milestones</span>
 data/loop_register.json    <span class="c">loop lists parsed from the email (generated)</span>
 data/data.js               <span class="c">bundle the dashboard loads (generated)</span>
+assets/theme.js            <span class="c">Auto / Light / Dark switch shared by every page</span>
+assets/fonts/              <span class="c">IBM Plex, self-hosted (no Google Fonts call)</span>
+exports/                   <span class="c">PDF and single-file offline page (generated)</span>
 scripts/build_data.py      <span class="c">parses the .eml and rebuilds data/</span>
+scripts/build_exports.cjs  <span class="c">builds the offline page and the PDF</span>
+scripts/test_dashboard.cjs <span class="c">browser checks for all pages and exports</span>
 vercel.json                <span class="c">routes and headers for Vercel</span>
 .vercelignore              <span class="c">keeps source/ and scripts/ off the deployed site</span>
 robots.txt                 <span class="c">blocks search crawlers</span></pre>
@@ -66,19 +81,41 @@ robots.txt                 <span class="c">blocks search crawlers</span></pre>
   <h2>View it locally</h2>
   <p>Open <code>index.html</code> in a browser. It needs no server and no build.</p>
 
+  <h2>Light and dark mode</h2>
+  <p>Every page has an <strong>Auto / Light / Dark</strong> switch in the top bar. Auto follows the device setting; Light and Dark pin the choice, which the browser remembers for next time. Charts redraw in the matching colours. Printing and the PDF always use the light theme.</p>
+
+  <h2>Exports</h2>
+  <ul>
+    <li><strong>PDF</strong> (<code>exports/loops-dashboard.pdf</code>): A4 landscape, light theme, about seven pages. The loop register is summarised rather than listed in full. The <strong>PDF</strong> button on the dashboard downloads it; <strong>Print</strong> gives the same layout from the browser.</li>
+    <li><strong>Offline page</strong> (<code>exports/loops-dashboard-offline.html</code>): one HTML file with the data, fonts and scripts embedded. It opens from email, Teams or a USB stick with no internet connection, and keeps the charts, tooltips, theme switch and searchable register.</li>
+  </ul>
+  <p>Both are generated, so rebuild them whenever the data changes (see <a href="#update">Add a new daily report</a>).</p>
+
   <h2>Deploy to Vercel</h2>
-  <p>The repo is a static site and is ready for Vercel as it stands. There is no build step: <code>data/data.js</code> is committed, so Vercel serves the files directly.</p>
+  <p>Live at <strong>loops-blue.vercel.app</strong> (Vercel project <code>loops</code>). The repo is a static site with no build step: <code>data/data.js</code> and <code>exports/</code> are committed, so Vercel serves the files directly. To set it up again from scratch:</p>
   <ol>
     <li>In Vercel, choose <strong>Add New → Project</strong> and import <code>orangejam72/loops</code>.</li>
     <li>Leave <strong>Framework Preset</strong> as <em>Other</em>, and leave the build and output settings empty.</li>
     <li>Deploy. Every push to the production branch redeploys, and every other branch gets a preview URL.</li>
-    <li>Under <strong>Settings → Deployment Protection</strong>, turn on Vercel Authentication (or password protection) so only invited people can open it.</li>
+    <li>Under <strong>Settings → Deployment Protection</strong>, set Vercel Authentication to <strong>All Deployments</strong>. It is set this way now, so only people logged in to Vercel with access to the team can open the site.</li>
   </ol>
   <p>Or from a terminal: <code>npx vercel</code> for a preview, <code>npx vercel --prod</code> for production.</p>
 <pre><span class="c"># routes on the deployed site</span>
-/          dashboard
-/prd       product requirements
-/readme    this page</pre>
+/                                     dashboard
+/prd                                  product requirements
+/readme                               this page
+/exports/loops-dashboard.pdf          PDF export
+/exports/loops-dashboard-offline.html offline page</pre>
+
+  <h2>Share link</h2>
+  <p>To let someone without a Vercel login see the site, send them the share link. It is the site address with a secret added:</p>
+<pre>https://loops-blue.vercel.app/?x-vercel-protection-bypass=<span class="c">SECRET</span>&amp;x-vercel-set-bypass-cookie=true</pre>
+  <ul>
+    <li>The first visit sets a cookie, so the rest of the site (PDF, offline page, PRD) works for that browser afterwards.</li>
+    <li>Anyone holding the link can view the site, so share it only with the people on the distribution list.</li>
+    <li>The secret is never stored in this repo. Find it, or revoke it and make a new one, in Vercel under <strong>Settings → Deployment Protection → Protection Bypass for Automation</strong>. Revoking it stops the old link working straight away.</li>
+    <li>For someone who should not get a lasting link, use the deployment's <strong>Share</strong> button in Vercel instead; that link expires after 23 hours.</li>
+  </ul>
   <p>What the config does:</p>
   <ul>
     <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes, <code>noindex</code> and basic security headers, and no caching on <code>data/</code>, so a new report appears straight after deploy.</li>
@@ -86,15 +123,21 @@ robots.txt                 <span class="c">blocks search crawlers</span></pre>
     <li><code>robots.txt</code> asks search engines not to crawl the site.</li>
   </ul>
 
-  <h2>Add a new daily report</h2>
+  <h2 id="update">Add a new daily report</h2>
   <ol>
     <li>Save the latest email from Outlook as <code>.eml</code> into <code>source/</code>.</li>
     <li>Add a record to <code>days</code> in <code>data/daily_reports.json</code> with the figures from its “Loop Testing Status” table. Update <code>systems</code>, <code>constraints</code> and <code>milestones</code> if they changed.</li>
     <li>Run the build. It uses only the Python standard library:
 <pre>python3 scripts/build_data.py</pre></li>
+    <li>Rebuild the PDF and offline page, then run the checks. These need Node and Playwright (<code>npm install -g playwright@1.56.1</code> once):
+<pre>NODE_PATH="$(npm root -g)" node scripts/build_exports.cjs
+NODE_PATH="$(npm root -g)" node scripts/test_dashboard.cjs</pre></li>
     <li>Reload <code>index.html</code>. KPIs, deltas, charts and findings all recalculate from the data.</li>
-    <li>Commit and push. Vercel redeploys automatically.</li>
+    <li>Update this README and the PRD change log if anything beyond the data changed, then commit and push. Vercel redeploys automatically.</li>
   </ol>
+
+  <h2>Testing</h2>
+  <p><code>scripts/test_dashboard.cjs</code> opens every page in headless Chromium and checks: KPIs match the latest data, charts draw, no script errors, no sideways scroll on a phone, the theme switch works and is remembered on all three pages, the offline page makes no network requests and still renders everything, and the PDF is valid, current and between 3 and 10 pages. It exits with an error if any check fails.</p>
 
   <h2>Reading the numbers</h2>
   <ul>
