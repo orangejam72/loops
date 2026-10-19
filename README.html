@@ -55,8 +55,8 @@ ol { padding-left: 20px; display: grid; gap: 6px; }
   <div class="links">
     <a href="index.html"><b>Open the dashboard</b><span>index.html</span></a>
     <a href="docs/PRD.html"><b>Read the PRD</b><span>docs/PRD.html</span></a>
-    <a href="exports/loops-dashboard.pdf"><b>Download the PDF</b><span>exports/loops-dashboard.pdf</span></a>
-    <a href="exports/loops-dashboard-offline.html"><b>Offline page</b><span>one file, no internet needed</span></a>
+    <a href="exports/loops-dashboard.pdf" download="loops-dashboard.pdf"><b>Download the PDF</b><span>exports/loops-dashboard.pdf</span></a>
+    <a href="exports/loops-dashboard-offline.html" download="loops-dashboard-offline.html"><b>Offline page</b><span>one file, no internet needed</span></a>
     <a href="https://github.com/orangejam72/loops"><b>Repository</b><span>orangejam72/loops</span></a>
   </div>
 
@@ -87,7 +87,7 @@ robots.txt                 <span class="c">blocks search crawlers</span></pre>
   <h2>Exports</h2>
   <ul>
     <li><strong>PDF</strong> (<code>exports/loops-dashboard.pdf</code>): A4 landscape, light theme, about seven pages. The loop register is summarised rather than listed in full. The <strong>PDF</strong> button on the dashboard downloads it; <strong>Print</strong> gives the same layout from the browser.</li>
-    <li><strong>Offline page</strong> (<code>exports/loops-dashboard-offline.html</code>): one HTML file with the data, fonts and scripts embedded. It opens from email, Teams or a USB stick with no internet connection, and keeps the charts, tooltips, theme switch and searchable register.</li>
+    <li><strong>Offline page</strong> (<code>exports/loops-dashboard-offline.html</code>): one HTML file with the data, fonts and scripts embedded. It opens from email, Teams or a USB stick with no internet connection, and keeps the charts, tooltips, theme switch and searchable register. The <strong>Offline page</strong> button saves it as <code>loops-dashboard-offline.html</code>, so it opens in a browser with a double-click.</li>
   </ul>
   <p>Both are generated, so rebuild them whenever the data changes (see <a href="#update">Add a new daily report</a>).</p>
 
@@ -118,7 +118,7 @@ robots.txt                 <span class="c">blocks search crawlers</span></pre>
   </ul>
   <p>What the config does:</p>
   <ul>
-    <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes (rewrites must point at the clean path, e.g. <code>/docs/PRD</code>, not <code>/docs/PRD.html</code>), <code>noindex</code> and basic security headers, and no caching on <code>data/</code>, so a new report appears straight after deploy.</li>
+    <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes (rewrites must point at the clean path, e.g. <code>/docs/PRD</code>, not <code>/docs/PRD.html</code>), <code>noindex</code> and basic security headers, no caching on <code>data/</code> so a new report appears straight after deploy, and a <code>Content-Disposition</code> filename for each export. Without that, clean URLs make Vercel name the offline page <code>loops-dashboard-offline</code> with no <code>.html</code>.</li>
     <li><code>.vercelignore</code> keeps <code>source/</code> (the raw email with contact details) and <code>scripts/</code> off the deployed site. They stay in the repo.</li>
     <li><code>robots.txt</code> asks search engines not to crawl the site.</li>
   </ul>
@@ -137,7 +137,7 @@ NODE_PATH="$(npm root -g)" node scripts/test_dashboard.cjs</pre></li>
   </ol>
 
   <h2>Testing</h2>
-  <p><code>scripts/test_dashboard.cjs</code> opens every page in headless Chromium and checks: KPIs match the latest data, charts draw, no script errors, no sideways scroll on a phone, the theme switch works and is remembered on all three pages, the offline page makes no network requests and still renders everything, and the PDF is valid, current and between 3 and 10 pages. It exits with an error if any check fails.</p>
+  <p><code>scripts/test_dashboard.cjs</code> opens every page in headless Chromium and checks: KPIs match the latest data, charts draw, no script errors, no sideways scroll on a phone, the theme switch works and is remembered on all three pages, the offline page makes no network requests and still renders everything, both download buttons save files with the right name and extension behind a Vercel-style clean-URL server, and the PDF is valid, current and between 3 and 10 pages. It exits with an error if any check fails.</p>
 
   <h2>Reading the numbers</h2>
   <ul>

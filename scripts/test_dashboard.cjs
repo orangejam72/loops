@@ -9,6 +9,7 @@ Exits non-zero if any check fails. Set CHROMIUM_PATH to use a local Chromium.
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const http = require("http");
 const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -62,6 +63,36 @@ const LIGHT_BG = "rgb(244, 246, 249)";
     check((await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)) <= 0, "dashboard: no sideways scroll at phone width");
     check(errors.length === 0, "dashboard: no script errors " + errors.join("; "));
     await ctx.close();
+  }
+
+  // Downloads keep their extensions behind a clean-URL host (Vercel strips ".html" and redirects)
+  {
+    const vercelHeaders = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8")).headers;
+    const types = { ".html": "text/html", ".pdf": "application/pdf", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".json": "application/json" };
+    const server = http.createServer((req, res) => {
+      const p = decodeURIComponent(req.url.split("?")[0]);
+      if (p.endsWith(".html")) { res.writeHead(308, { Location: p.replace(/(index)?\.html$/, "") }); return res.end(); }
+      let file = path.join(ROOT, p === "/" ? "index.html" : p);
+      if (!fs.existsSync(file) && fs.existsSync(file + ".html")) file += ".html";
+      if (!file.startsWith(ROOT) || !fs.existsSync(file)) { res.writeHead(404); return res.end(); }
+      // Like Vercel: name the file after the last URL segment, then apply vercel.json header rules.
+      const headers = { "Content-Type": types[path.extname(file)] || "application/octet-stream", "Content-Disposition": `inline; filename="${path.basename(p)}"` };
+      for (const rule of vercelHeaders) if (new RegExp(`^${rule.source}$`).test(p)) for (const h of rule.headers) headers[h.key] = h.value;
+      res.writeHead(200, headers);
+      fs.createReadStream(file).pipe(res);
+    });
+    await new Promise((r) => server.listen(0, "127.0.0.1", r));
+    const ctx = await browser.newContext({ acceptDownloads: true });
+    const page = await ctx.newPage();
+    await page.goto(`http://127.0.0.1:${server.address().port}/`);
+    for (const [selector, name] of [['.actions a[href$="offline.html"]', "loops-dashboard-offline.html"], ['.actions a[href$=".pdf"]', "loops-dashboard.pdf"]]) {
+      const [download] = await Promise.all([page.waitForEvent("download", { timeout: 10000 }), page.click(selector)]);
+      const saved = await download.path();
+      const same = saved && fs.readFileSync(saved).equals(fs.readFileSync(path.join(ROOT, "exports", name)));
+      check(download.suggestedFilename() === name && same, `download: saves as ${download.suggestedFilename()} (expected ${name}, content matches: ${same})`);
+    }
+    await ctx.close();
+    server.close();
   }
 
   // Theme switch on every page

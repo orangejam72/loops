@@ -42,6 +42,24 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/exports/loops-dashboard-offline(.html)?",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"loops-dashboard-offline.html\""
+        }
+      ]
+    },
+    {
+      "source": "/exports/loops-dashboard.pdf",
+      "headers": [
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"loops-dashboard.pdf\""
+        }
+      ]
     }
   ]
 }

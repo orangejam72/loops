@@ -75,7 +75,7 @@ a { color: var(--accent); }
     <div class="themebar"><div class="theme" role="group" aria-label="Colour theme"><button type="button" data-theme-set="system" title="Follow your device setting">Auto</button><button type="button" data-theme-set="light">Light</button><button type="button" data-theme-set="dark">Dark</button></div></div>
     <h1>Loops: loop testing progress dashboard</h1>
     <p>Product requirements for turning the daily “Loop test daily Look Ahead” emails into one dashboard everyone can read.</p>
-    <div class="meta"><span class="pill">Draft v0.3</span><span class="pill">19 Oct 2026</span><span class="pill">Owner: Jaime Bourne</span><span class="pill">Project: Norfolk Vanguard ICT loop testing</span></div>
+    <div class="meta"><span class="pill">Draft v0.3.1</span><span class="pill">19 Oct 2026</span><span class="pill">Owner: Jaime Bourne</span><span class="pill">Project: Norfolk Vanguard ICT loop testing</span></div>
 
     <h2 id="problem">1. Problem</h2>
     <p>Loop testing progress reaches about 25 people across Aker Solutions, Siemens Energy, RWE and Drydocks World as a daily email. Each email restates the full status table and quotes every earlier day underneath it. By 17 Oct the thread holds seven messages and runs to over 2,000 lines of text.</p>
@@ -175,6 +175,7 @@ a { color: var(--accent); }
         <tr><td>R18</td><td>Provide one HTML file that works with no internet: no external fonts, scripts or data files.</td><td><span class="pri">Must</span></td></tr>
         <tr><td>R19</td><td>Let named guests view the protected site without a Vercel account, with a link that can be revoked.</td><td><span class="pri">Must</span></td></tr>
         <tr><td>R20</td><td>Automated browser checks for every page and export, run before each push.</td><td><span class="pri">Should</span></td></tr>
+        <tr><td>R21</td><td>Downloaded exports keep their file extension (<code>.html</code>, <code>.pdf</code>) so they open with a double-click.</td><td><span class="pri">Must</span></td></tr>
       </tbody>
     </table></div>
 
@@ -198,7 +199,7 @@ a { color: var(--accent); }
         <tr><td>Data exposure</td><td><code>.vercelignore</code> keeps <code>source/</code> and <code>scripts/</code> off the deployed site, so the raw email and its contact details are never served (R13).</td></tr>
         <tr><td>Access</td><td>Vercel Authentication is on for all deployments, including the production address, so only signed-in team members can open the site. <code>X-Robots-Tag: noindex</code> and <code>robots.txt</code> block indexing (R14).</td></tr>
         <tr><td>Guests</td><td>A Protection Bypass for Automation secret forms the share link (R19). It is kept in Vercel, never in the repo, and can be revoked and regenerated there; Vercel's per-deployment Share links (23 hours) cover one-off viewers.</td></tr>
-        <tr><td>Exports</td><td><code>scripts/build_exports.cjs</code> builds <code>exports/loops-dashboard-offline.html</code> and renders <code>exports/loops-dashboard.pdf</code> from it in headless Chromium. Both are committed and served at <code>/exports/</code> behind the same protection, with <code>exports/manifest.json</code> recording each file's size and SHA-256 so a deployment can be checked against git.</td></tr>
+        <tr><td>Exports</td><td><code>scripts/build_exports.cjs</code> builds <code>exports/loops-dashboard-offline.html</code> and renders <code>exports/loops-dashboard.pdf</code> from it in headless Chromium. Both are committed and served at <code>/exports/</code> behind the same protection, with <code>exports/manifest.json</code> recording each file's size and SHA-256 so a deployment can be checked against git. <code>vercel.json</code> sets a <code>Content-Disposition</code> filename on each export, because clean URLs otherwise serve the offline page without its <code>.html</code> extension (R21).</td></tr>
         <tr><td>Fonts</td><td>IBM Plex is self-hosted in <code>assets/fonts/</code>, so the site makes no third-party font requests and the offline page can embed it.</td></tr>
         <tr><td>Freshness</td><td><code>data/</code> is served with <code>must-revalidate</code>, so viewers get a new report straight after deploy.</td></tr>
       </tbody>
@@ -238,6 +239,7 @@ a { color: var(--accent); }
     <div class="tbl"><table>
       <thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
       <tbody>
+        <tr><td>v0.3.1</td><td class="mono">2026-10-19</td><td>Offline page downloaded without a <code>.html</code> extension on Vercel. Fixed with explicit download filenames and a <code>Content-Disposition</code> header (R21); test suite now checks downloads behind a clean-URL server.</td></tr>
         <tr><td>v0.3</td><td class="mono">2026-10-19</td><td>Added theme switch (R16), PDF export (R17), offline page (R18), share link and full deployment protection (R19), browser test suite (R20); export manifest with checksums; fonts self-hosted; 17 Oct data added. Fixed the <code>/prd</code> and <code>/readme</code> routes, which returned 404 because they pointed at <code>.html</code> names that clean URLs do not serve.</td></tr>
         <tr><td>v0.2</td><td class="mono">2026-10-17</td><td>Added Vercel hosting and access (section 8), requirements R12–R14, and the GitHub Action step to v1.1.</td></tr>
         <tr><td>v0.1</td><td class="mono">2026-10-17</td><td>First draft from the 9–17 Oct look-ahead thread.</td></tr>
