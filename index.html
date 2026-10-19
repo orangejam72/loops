@@ -21,7 +21,7 @@
   --ink-3: #6b7685;
   --accent: #2a78d6;
   --accent-soft: #e6f0fc;
-  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300;
   --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
   --grid: #edf0f4;
   --shadow: 0 1px 2px rgba(14,22,34,.04), 0 1px 1px rgba(14,22,34,.03);
@@ -33,14 +33,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0d1117; --surface: #151a22; --surface-2: #1a2029; --line: #252c37; --line-strong: #323b48;
     --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a;
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300;
     --grid: #1f2630; --shadow: none; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0d1117; --surface: #151a22; --surface-2: #1a2029; --line: #252c37; --line-strong: #323b48;
   --ink: #eef1f5; --ink-2: #b4bdca; --ink-3: #8a95a5; --accent: #3987e5; --accent-soft: #17263a;
-  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300;
   --grid: #1f2630; --shadow: none; color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -242,7 +242,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 
   <div class="section-label" id="systems">Systems</div>
   <section class="card">
-    <div class="card-h"><h2>Workfront by system</h2><span class="sub">Status from the latest report · I/O total for 14–16 Oct</span></div>
+    <div class="card-h"><h2>Workfront by system</h2><span class="sub" id="sys-sub"></span></div>
     <div class="card-b"><div class="systems" id="sysgrid"></div></div>
   </section>
 
@@ -256,7 +256,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       </table></div></div>
     </section>
     <section class="card span-4">
-      <div class="card-h"><h2>Coming up</h2><span class="sub">Dates in the 17 Oct report</span></div>
+      <div class="card-h"><h2>Coming up</h2><span class="sub" id="ms-sub"></span></div>
       <div class="card-b"><div class="timeline" id="ms"></div></div>
     </section>
   </div>
@@ -286,7 +286,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   </section>
 
   <div class="foot">
-    <span>Source: “Loop test daily Look Ahead” email thread, 9–17 Oct 2026. <a href="docs/PRD.html">PRD</a> · <a href="README.html">README</a></span>
+    <span>Source: “Loop test daily Look Ahead” email thread, 9–18 Oct 2026. <a href="docs/PRD.html">PRD</a> · <a href="README.html">README</a></span>
     <span>CPCL = commissioning check list · CWA = completions system · OK / PB / OS = accepted / Punch B / outstanding</span>
   </div>
 </main>
@@ -346,21 +346,31 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   const resid = days.filter((d) => d.partialAlreadyInCwa != null).map((d) => d.cwaTotal - (d.fieldComplete - d.awaitingCwa + d.partialAlreadyInCwa));
   const wip = last.commenced - last.fieldComplete;
   const fcRate = ((last.fieldComplete - first.fieldComplete) / (days.length - 1)).toFixed(1);
+  const dOk = last.cwaOk - d14.cwaOk, dPb = last.cwaPb - d14.cwaPb;
+  const lastOk = last.cwaOk - prev.cwaOk, lastPb = last.cwaPb - prev.cwaPb;
+  let pbRun = 0;
+  for (let i = days.length - 2; i > 0 && days[i].cwaPb - days[i - 1].cwaPb > days[i].cwaOk - days[i - 1].cwaOk; i--) pbRun++;
+  const awaitSeries = days.filter((d) => d.awaitingCwa != null);
+  const peak = awaitSeries.reduce((a, d) => (d.awaitingCwa > a.awaitingCwa ? d : a), awaitSeries[0]);
+  const attributed = (d) => d.cpclAttributed != null ? d.cpclAttributed : sum(d.cpclBySystem);
+  const mismatches = days.slice(1).map((d, i) => ({ d, a: attributed(d), delta: d.cwaTotal - days[i].cwaTotal })).filter((m) => m.a != null && m.a !== m.delta);
   const findings = [
-    { c: "--critical", t: "Punch B is growing faster than clean closures",
-      p: `Punch B went from ${pct(first.cwaPb, first.cwaTotal)}% to ${pct(last.cwaPb, last.cwaTotal)}% of CWA records. Since ${fmtD(d14.progressThrough)}, PB rose by ${last.cwaPb - d14.cwaPb} while OK rose by ${last.cwaOk - d14.cwaOk}. The CWA total looks healthy, but the close-out work behind it keeps growing.`,
+    { c: dPb > dOk ? "--critical" : "--warning", t: dPb > dOk ? "Punch B is growing faster than clean closures" : "Clean closures are catching up with Punch B",
+      p: `Punch B went from ${pct(first.cwaPb, first.cwaTotal)}% of CWA records on ${fmtD(first.progressThrough)} to ${pct(last.cwaPb, last.cwaTotal)}% now. Since ${fmtD(d14.progressThrough)}, PB rose by ${dPb} and OK by ${dOk}.` +
+        (lastOk > lastPb ? ` On ${fmtD(last.progressThrough)} OK outpaced PB (+${lastOk} vs +${lastPb})${pbRun ? ` after ${pbRun} day${pbRun > 1 ? "s" : ""} of PB leading` : ""}, so the PB share fell.` : " The CWA total looks healthy, but the close-out work behind it keeps growing."),
       f: last.cwaPb, fs: "PB records" },
-    { c: "--serious", t: "Field progress is getting ahead of CWA",
-      p: `Field-complete loop references still showing OS in CWA went from 0 on 12 Oct to ${last.awaitingCwa}. A further ${last.partialAlreadyInCwa} partially tested references are already OK/PB in CWA, which is the opposite mismatch.`,
+    { c: last.awaitingCwa < peak.awaitingCwa ? "--warning" : "--serious", t: last.awaitingCwa < peak.awaitingCwa ? "The CWA backlog is coming down" : "Field progress is getting ahead of CWA",
+      p: `Field-complete loop references still showing OS in CWA peaked at ${peak.awaitingCwa} on ${fmtD(peak.progressThrough)} and stand at ${last.awaitingCwa} now. A further ${last.partialAlreadyInCwa} partially tested references are already OK/PB in CWA, which is the opposite mismatch.`,
       f: last.awaitingCwa + last.partialAlreadyInCwa, fs: "refs to reconcile" },
-    { c: "--good", t: "Instrument I/O rate is rising without System 82",
-      p: `Without System 82 electrical, completed I/O went ${non82.join(" → ")} over ${ioDays.map((d) => fmtD(d.progressThrough)).join(", ")}. System 82 accounted for ${s82[0]} of ${sum(ioDays[0].ioBySystem)} and ${s82[1]} of ${sum(ioDays[1].ioBySystem)} on the high days. The drop to ${ioNow} on 16 Oct is the 82 work finishing plus the Level 7 outage, not a slowdown.`,
-      f: non82[non82.length - 1], fs: "non-82 I/O, 16 Oct" },
+    { c: "--good", t: "Instrument I/O rate holds up without System 82",
+      p: `Without System 82 electrical, completed I/O went ${non82.join(" → ")} over ${ioDays.map((d) => fmtD(d.progressThrough)).join(", ")}. System 82 accounted for ${s82[0]} of ${sum(ioDays[0].ioBySystem)} and ${s82[1]} of ${sum(ioDays[1].ioBySystem)} on the high days, so the lower totals since are the 82 work finishing, not a slowdown.`,
+      f: non82[non82.length - 1], fs: "non-82 I/O, " + fmtD(last.progressThrough) },
     { c: "--warning", t: "Work in progress keeps widening",
-      p: `${wip} commenced loop references are not field complete (${last.partial} partially tested, ${last.noIoYet} with no I/O yet), up from ${first.commenced - first.fieldComplete} on 11 Oct. Field completions average ${fcRate} a day, so finishing commenced loops before opening new ones would show up quickly in CPCL closures.`,
+      p: `${wip} commenced loop references are not field complete (${last.partial} partially tested, ${last.noIoYet} with no I/O yet), up from ${first.commenced - first.fieldComplete} on ${fmtD(first.progressThrough)}. Field completions average ${fcRate} a day, so finishing commenced loops before opening new ones would show up quickly in CPCL closures.`,
       f: wip, fs: "open loop refs" },
     { c: "--warning", t: "Figures do not quite add up",
-      p: `Field complete − awaiting CWA + partial-already-in-CWA comes out ${resid.map((r) => r).join(", ")} below the CWA total on each day from 13 Oct. The 16 Oct report attributes ${last.cpclAttributed} closures to the day, but CWA rose by ${last.cwaTotal - prev.cwaTotal}. Worth a tracker vs CWA check.`,
+      p: `Field complete − awaiting CWA + partial-already-in-CWA comes out ${resid.join(", ")} below the CWA total on each day from 13 Oct.` +
+        (mismatches.length ? ` Closures credited to the day also differ from the CWA change: ${mismatches.map((m) => `${fmtD(m.d.progressThrough)} ${m.a} vs ${m.delta}`).join("; ")}.` : "") + " Worth a tracker vs CWA check.",
       f: resid[resid.length - 1], fs: "unexplained CPCLs" },
   ];
   const fEl = document.getElementById("findings");
@@ -402,7 +412,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     const f = frame(host, opt.h || 240, { l: 34, r: 8, t: 22, b: 28 });
     const totals = rows.map((r) => opt.grouped ? Math.max(...series.map((s) => s.get(r) || 0)) : series.reduce((a, s) => a + (s.get(r) || 0), 0));
     const max = niceMax(Math.max(...totals) * 1.08);
-    yAxis(f, max, max % 4 === 0 && max / 4 >= 1 && Number.isInteger(max / 4) ? 4 : 5);
+    yAxis(f, max, Number.isInteger(max / 4) ? 4 : 5);
     const band = (f.x1 - f.x0) / rows.length;
     const bw = Math.min(opt.grouped ? 22 : 46, band * (opt.grouped ? 0.3 : 0.56));
     const sy = (v) => (v / max) * (f.y0 - f.y1);
@@ -439,7 +449,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   function lines(host, rows, series, opt) {
     const f = frame(host, opt.h || 260, { l: 34, r: 112, t: 14, b: 28 });
     const max = niceMax(Math.max(...rows.flatMap((r) => series.map((s) => s.get(r)))) * 1.05);
-    yAxis(f, max, 4);
+    yAxis(f, max, Number.isInteger(max / 4) ? 4 : 5);
     const sx = (i) => f.x0 + 10 + (i / (rows.length - 1)) * (f.x1 - f.x0 - 20);
     const sy = (v) => f.y0 - (v / max) * (f.y0 - f.y1);
     rows.forEach((r, i) => { const t = svgEl("text", { x: sx(i), y: f.H - 8, "text-anchor": "middle" }, f.svg); t.textContent = opt.xLabel(r); });
@@ -473,7 +483,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 
   const SYS = [
     { id: "40", k: "System 40", c: "--s1" }, { id: "82", k: "System 82", c: "--s2" }, { id: "97", k: "System 97", c: "--s3" },
-    { id: "47", k: "System 47", c: "--s4" }, { id: "56", k: "System 56", c: "--s5" },
+    { id: "47", k: "System 47", c: "--s4" }, { id: "56", k: "System 56", c: "--s5" }, { id: "53", k: "System 53", c: "--s6" },
   ];
 
   function renderCharts() {
@@ -538,10 +548,12 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   ioDays.forEach((d) => Object.entries(d.ioBySystem).forEach(([k, v]) => { ioTot[k] = (ioTot[k] || 0) + v; }));
   const remain = (days.find((d) => d.remainingScope) || {}).remainingScope || {};
   const ST = { active: ["--good", "Active"], issue: ["--serious", "Issue"], planned: ["--accent", "Planned"], prep: ["--ink-3", "Readiness"] };
+  const ioRange = `${fmtD(ioDays[0].progressThrough).split(" ")[0]}–${fmtD(last.progressThrough)}`;
+  document.getElementById("sys-sub").textContent = `Status from the latest report · I/O total for ${ioRange}`;
   const sg = document.getElementById("sysgrid");
   D.systems.forEach((s) => {
     const st = ST[s.state];
-    const io = ioTot[s.id] != null ? `${ioTot[s.id]} I/O 14–16 Oct` : "No I/O reported 14–16 Oct";
+    const io = ioTot[s.id] != null ? `${ioTot[s.id]} I/O ${ioRange}` : `No I/O reported ${ioRange}`;
     const rem = remain[s.id] ? ` · 13 Oct remaining: ${remain[s.id].loopRefs} refs / ${remain[s.id].io} I/O` : "";
     sg.appendChild(el(`<div class="sys"><div class="top"><div><div class="id">${esc(s.id)}</div><div class="nm">${esc(s.name)}</div></div>
       <span class="chip"><span class="dot" style="background:var(${st[0]})"></span>${esc(s.label)}</span></div>
@@ -558,10 +570,11 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       <td><span class="chip"><span class="dot" style="background:var(${s[0]})"></span>${s[1]}</span></td><td style="color:var(--ink-2);min-width:260px">${esc(c.detail)}</td></tr>`));
   });
   const today = new Date(last.reportDate + "T00:00:00");
+  document.getElementById("ms-sub").textContent = `Dates in the ${fmtD(last.reportDate)} report`;
   const msEl = document.getElementById("ms");
   D.milestones.forEach((m) => {
     const dd = Math.round((new Date(m.date + "T00:00:00") - today) / 864e5);
-    const rel = dd === 0 ? "today" : dd === 1 ? "in 1 day" : `in ${dd} days`;
+    const rel = dd === 0 ? "report day" : dd === 1 ? "in 1 day" : dd > 1 ? `in ${dd} days` : `${-dd} day${dd === -1 ? "" : "s"} before report`;
     msEl.appendChild(el(`<div class="ms"><div class="d">${fmtD(m.date)}<small>${rel}</small></div><div><h3>${esc(m.title)}</h3><p>${esc(m.detail)}</p></div></div>`));
   });
 

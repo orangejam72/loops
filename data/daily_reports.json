@@ -1,6 +1,6 @@
 {
   "project": "Norfolk Vanguard — ICT Loop Testing & Commissioning",
-  "source": "source/2026-10-17_Re_Loop_test_daily_Look_Ahead.eml",
+  "source": "source/2026-10-18_Re_Loop_test_daily_Look_Ahead_and_Progress.eml",
   "notes": [
     "Figures are transcribed from the 'Loop Testing Status' tables in each daily look-ahead email.",
     "progressThrough is the day the figures describe; reportDate is the day the email was sent.",
@@ -9,98 +9,344 @@
   ],
   "days": [
     {
-      "progressThrough": "2026-10-11", "reportDate": "2026-10-12",
-      "commenced": 57, "fieldComplete": 53, "partial": null, "noIoYet": null,
-      "cwaOk": 28, "cwaPb": 7, "cwaTotal": 35,
-      "awaitingCwa": 18, "partialAlreadyInCwa": null,
-      "onHoldCpcls": 4, "onHoldIo": 52,
-      "ioBySystem": null, "cpclBySystem": null,
+      "progressThrough": "2026-10-11",
+      "reportDate": "2026-10-12",
+      "commenced": 57,
+      "fieldComplete": 53,
+      "partial": null,
+      "noIoYet": null,
+      "cwaOk": 28,
+      "cwaPb": 7,
+      "cwaTotal": 35,
+      "awaitingCwa": 18,
+      "partialAlreadyInCwa": null,
+      "onHoldCpcls": 4,
+      "onHoldIo": 52,
+      "ioBySystem": null,
+      "cpclBySystem": null,
       "headline": "53 CPCLs field complete, 35 formally closed in CWA; System 82 held with 52 electrical I/O."
     },
     {
-      "progressThrough": "2026-10-12", "reportDate": "2026-10-13",
-      "commenced": 92, "fieldComplete": 88, "partial": 4, "noIoYet": null,
-      "cwaOk": 59, "cwaPb": 29, "cwaTotal": 88,
-      "awaitingCwa": 0, "partialAlreadyInCwa": null,
-      "onHoldCpcls": 4, "onHoldIo": 52,
-      "ioBySystem": null, "cpclBySystem": null,
-      "fieldCompleteBySystem": { "40": 20, "50": 7 },
+      "progressThrough": "2026-10-12",
+      "reportDate": "2026-10-13",
+      "commenced": 92,
+      "fieldComplete": 88,
+      "partial": 4,
+      "noIoYet": null,
+      "cwaOk": 59,
+      "cwaPb": 29,
+      "cwaTotal": 88,
+      "awaitingCwa": 0,
+      "partialAlreadyInCwa": null,
+      "onHoldCpcls": 4,
+      "onHoldIo": 52,
+      "ioBySystem": null,
+      "cpclBySystem": null,
+      "fieldCompleteBySystem": {
+        "40": 20,
+        "50": 7
+      },
       "headline": "27 additional CPCLs field complete (20 System 40, 7 System 50); System 87 added with 7 loop refs / 24 I/O."
     },
     {
-      "progressThrough": "2026-10-13", "reportDate": "2026-10-14",
-      "commenced": 112, "fieldComplete": 95, "partial": 13, "noIoYet": null,
-      "cwaOk": 69, "cwaPb": 31, "cwaTotal": 100,
-      "awaitingCwa": 8, "partialAlreadyInCwa": 12,
-      "onHoldCpcls": 4, "onHoldIo": 52,
-      "ioBySystem": null, "cpclBySystem": null,
+      "progressThrough": "2026-10-13",
+      "reportDate": "2026-10-14",
+      "commenced": 112,
+      "fieldComplete": 95,
+      "partial": 13,
+      "noIoYet": null,
+      "cwaOk": 69,
+      "cwaPb": 31,
+      "cwaTotal": 100,
+      "awaitingCwa": 8,
+      "partialAlreadyInCwa": 12,
+      "onHoldCpcls": 4,
+      "onHoldIo": 52,
+      "ioBySystem": null,
+      "cpclBySystem": null,
       "remainingScope": {
-        "40": { "loopRefs": 14, "io": 67 },
-        "50": { "loopRefs": 9, "io": 25 },
-        "64": { "loopRefs": 4, "io": 12 },
-        "87": { "loopRefs": 6, "io": 21 }
+        "40": {
+          "loopRefs": 14,
+          "io": 67
+        },
+        "50": {
+          "loopRefs": 9,
+          "io": 25
+        },
+        "64": {
+          "loopRefs": 4,
+          "io": 12
+        },
+        "87": {
+          "loopRefs": 6,
+          "io": 21
+        }
       },
       "headline": "100 CPCLs recorded OK/PB in CWA. Digital testing after 14:00 lost to SCADA/HMI interruptions."
     },
     {
-      "progressThrough": "2026-10-14", "reportDate": "2026-10-15",
-      "commenced": 138, "fieldComplete": 118, "partial": 16, "noIoYet": null,
-      "cwaOk": 79, "cwaPb": 45, "cwaTotal": 124,
-      "awaitingCwa": 9, "partialAlreadyInCwa": 14,
-      "onHoldCpcls": 4, "onHoldIo": 52,
-      "ioBySystem": { "40": 18, "82": 50, "97": 2 },
-      "cpclBySystem": { "40": 16, "82": 3, "97": 2, "87": 3 },
+      "progressThrough": "2026-10-14",
+      "reportDate": "2026-10-15",
+      "commenced": 138,
+      "fieldComplete": 118,
+      "partial": 16,
+      "noIoYet": null,
+      "cwaOk": 79,
+      "cwaPb": 45,
+      "cwaTotal": 124,
+      "awaitingCwa": 9,
+      "partialAlreadyInCwa": 14,
+      "onHoldCpcls": 4,
+      "onHoldIo": 52,
+      "ioBySystem": {
+        "40": 18,
+        "82": 50,
+        "97": 2
+      },
+      "cpclBySystem": {
+        "40": 16,
+        "82": 3,
+        "97": 2,
+        "87": 3
+      },
       "headline": "70 HW I/O completed, mostly System 82 electrical DI/DO; 24 CPCLs recorded OK/PB."
     },
     {
-      "progressThrough": "2026-10-15", "reportDate": "2026-10-16",
-      "commenced": 166, "fieldComplete": 144, "partial": 16, "noIoYet": 6,
-      "cwaOk": 82, "cwaPb": 64, "cwaTotal": 146,
-      "awaitingCwa": 14, "partialAlreadyInCwa": 15,
-      "onHoldCpcls": null, "onHoldIo": null,
-      "ioBySystem": { "40": 8, "82": 56, "47": 5, "97": 11 },
-      "cpclBySystem": { "40": 6, "82": 4, "47": 1, "97": 10 },
+      "progressThrough": "2026-10-15",
+      "reportDate": "2026-10-16",
+      "commenced": 166,
+      "fieldComplete": 144,
+      "partial": 16,
+      "noIoYet": 6,
+      "cwaOk": 82,
+      "cwaPb": 64,
+      "cwaTotal": 146,
+      "awaitingCwa": 14,
+      "partialAlreadyInCwa": 15,
+      "onHoldCpcls": null,
+      "onHoldIo": null,
+      "ioBySystem": {
+        "40": 8,
+        "82": 56,
+        "47": 5,
+        "97": 11
+      },
+      "cpclBySystem": {
+        "40": 6,
+        "82": 4,
+        "47": 1,
+        "97": 10
+      },
       "headline": "80 HW I/O completed; the four held System 82 panel CPCLs are now field complete and PB in CWA."
     },
     {
-      "progressThrough": "2026-10-16", "reportDate": "2026-10-17",
-      "commenced": 185, "fieldComplete": 162, "partial": 18, "noIoYet": 5,
-      "cwaOk": 87, "cwaPb": 74, "cwaTotal": 161,
-      "awaitingCwa": 20, "partialAlreadyInCwa": 17,
-      "onHoldCpcls": null, "onHoldIo": null,
-      "ioBySystem": { "40": 12, "56": 10, "97": 8 },
+      "progressThrough": "2026-10-16",
+      "reportDate": "2026-10-17",
+      "commenced": 185,
+      "fieldComplete": 162,
+      "partial": 18,
+      "noIoYet": 5,
+      "cwaOk": 87,
+      "cwaPb": 74,
+      "cwaTotal": 161,
+      "awaitingCwa": 20,
+      "partialAlreadyInCwa": 17,
+      "onHoldCpcls": null,
+      "onHoldIo": null,
+      "ioBySystem": {
+        "40": 12,
+        "56": 10,
+        "97": 8
+      },
       "cpclBySystem": null,
       "cpclAttributed": 17,
       "headline": "30 HW I/O completed; afternoon lost to a Level 7 workstation outage. Valve command/feedback discrepancies found on System 40."
+    },
+    {
+      "progressThrough": "2026-10-17",
+      "reportDate": "2026-10-18",
+      "commenced": 215,
+      "fieldComplete": 188,
+      "partial": 19,
+      "noIoYet": 8,
+      "cwaOk": 112,
+      "cwaPb": 85,
+      "cwaTotal": 197,
+      "awaitingCwa": 11,
+      "partialAlreadyInCwa": 18,
+      "onHoldCpcls": null,
+      "onHoldIo": null,
+      "ioBySystem": {
+        "53": 14,
+        "56": 11,
+        "97": 3
+      },
+      "cpclBySystem": {
+        "40": 5,
+        "47": 4,
+        "53": 13,
+        "56": 10,
+        "97": 4
+      },
+      "headline": "28 HW I/O and 26 loop references completed; 36 CPCLs recorded in CWA (25 OK, 11 PB). System 53 joined the workfront with 13 loops field complete."
     }
   ],
   "systems": [
-    { "id": "40", "name": "Cooling Medium", "state": "issue", "label": "Active · valve issue", "note": "12 I/O on 16 Oct. Command vs feedback discrepancies on 40TV0044A and 40FV0082A; scaling, positioner calibration and travel times under review. Affected loops to be retested." },
-    { "id": "47", "name": "System 47", "state": "active", "label": "Active", "note": "Testing started 15 Oct (5 I/O). Remaining HW scope plus CPCL / Punch B close-out." },
-    { "id": "50", "name": "Seawater", "state": "issue", "label": "Active · CWA mismatch", "note": "Four field-complete CPCLs under 5001-C04 show OS in CWA since 13 Oct and still need reconciling." },
-    { "id": "56", "name": "System 56", "state": "active", "label": "Active", "note": "Brought in 16 Oct with 10 HW I/O completed. Continue scope and CWA close-out." },
-    { "id": "64", "name": "System 64", "state": "active", "label": "Active · readiness", "note": "Available HW testing, subject to field and workstation readiness." },
-    { "id": "82", "name": "Electrical", "state": "planned", "label": "Digital tests 19 Oct", "note": "106 I/O completed on 14–15 Oct. 82EL010 at 18/20 (2 DI remaining). Digital functional testing planned from Mon 19 Oct after simulation checks." },
-    { "id": "87", "name": "System 87", "state": "active", "label": "Active", "note": "Outstanding HW loops, Siemens interface coordination and Punch B close-out." },
-    { "id": "97", "name": "System 97", "state": "active", "label": "Active", "note": "Started 14 Oct; 21 I/O completed since. Continue scope and outstanding punches." },
-    { "id": "70/72", "name": "Systems 70 / 72", "state": "prep", "label": "Readiness", "note": "Panel readiness, vendor coordination, energisation, then interface and C&E testing." },
-    { "id": "53/85/86", "name": "Systems 53, 85, 86", "state": "prep", "label": "Readiness", "note": "Preparing to enter the workfront as package and commissioning readiness allows." }
+    {
+      "id": "40",
+      "name": "Cooling Medium",
+      "state": "issue",
+      "label": "Active · valve issue",
+      "note": "Five more CPCLs OK/PB on 17 Oct, including outstanding loop 40-0103. Valve command/feedback discrepancies still under investigation; Rotork checks confirmed DDC address 50 and 2% deadband. Valve response and approved settings to be verified before acceptance."
+    },
+    {
+      "id": "47",
+      "name": "System 47",
+      "state": "active",
+      "label": "Active",
+      "note": "Four more CPCLs recorded OK/PB on 17 Oct. Continue outstanding I/O and CWA / Punch B close-out."
+    },
+    {
+      "id": "50",
+      "name": "Seawater",
+      "state": "issue",
+      "label": "Active · CWA mismatch",
+      "note": "Four field-complete CPCLs under 5001-C04 still OS in CWA. Serial/VMS CPCL linkage also needs updating so serial signals sit under their parent loops."
+    },
+    {
+      "id": "53",
+      "name": "System 53",
+      "state": "active",
+      "label": "Active",
+      "note": "Brought in 17 Oct: 14 I/O, 13 loop references field complete and 13 CPCLs OK/PB. Package preparation for functional commissioning next."
+    },
+    {
+      "id": "56",
+      "name": "System 56",
+      "state": "active",
+      "label": "Active",
+      "note": "11 I/O and 10 CPCLs OK/PB on 17 Oct. Six field-complete loops still show OS in CWA."
+    },
+    {
+      "id": "64",
+      "name": "System 64",
+      "state": "active",
+      "label": "Active · readiness",
+      "note": "Available HW testing alongside Systems 47 and 87, subject to field and workstation readiness."
+    },
+    {
+      "id": "82",
+      "name": "Electrical",
+      "state": "planned",
+      "label": "Digital tests 19 Oct",
+      "note": "106 I/O completed on 14–15 Oct. Digital functional testing planned from Mon 19 Oct, subject to simulation checks, switching arrangements and Siemens/operator support."
+    },
+    {
+      "id": "87",
+      "name": "System 87",
+      "state": "active",
+      "label": "Active",
+      "note": "Outstanding HW loops, Siemens interface coordination and Punch B close-out."
+    },
+    {
+      "id": "97",
+      "name": "System 97",
+      "state": "active",
+      "label": "Active",
+      "note": "Started 14 Oct; 3 I/O and 4 CPCLs OK/PB on 17 Oct. Expanding the workfront and clearing outstanding punches."
+    },
+    {
+      "id": "70/72",
+      "name": "Systems 70 / 72",
+      "state": "prep",
+      "label": "Readiness",
+      "note": "RFCC, energisation, vendor readiness and interface-testing preparations."
+    },
+    {
+      "id": "85/86",
+      "name": "Systems 85, 86",
+      "state": "prep",
+      "label": "Readiness",
+      "note": "Preparing to enter the workfront as RFCC, energisation and vendor readiness allow."
+    }
   ],
   "constraints": [
-    { "title": "Valve command vs feedback", "raised": "2026-10-16", "status": "open", "detail": "40TV0044A and 40FV0082A, among others, report actual positions that differ from the commanded positions. Site meeting 17 Oct." },
-    { "title": "SCADA / HMI availability", "raised": "2026-10-13", "status": "open", "detail": "Siemens downloads interrupted HMI and reactivated dormant alarms. Improved by 14 Oct, but the Level 7 system was down for several hours on 16 Oct PM." },
-    { "title": "Wi-Fi connectivity", "raised": "2026-10-13", "status": "partial", "detail": "Improved at Level 1A, so CWA and tracker updates can be done online. Level 7 still needs work." },
-    { "title": "Operator access for DO activation", "raised": "2026-10-13", "status": "partial", "detail": "Reported resolved on 14 Oct; the 15 and 16 Oct reports still ask Siemens for permissions and DO activation arrangements." },
-    { "title": "5001-C04 CWA records", "raised": "2026-10-13", "status": "open", "detail": "Four previously OK System 50 CPCLs now show OS in CWA." },
-    { "title": "System 82 digital input state / HMI mapping", "raised": "2026-10-09", "status": "partial", "detail": "4 CPCLs and 52 I/O held until 14 Oct. The panels were then field complete and recorded PB; digital functional testing comes next." },
-    { "title": "RIO cabinet I/O cards", "raised": "2026-10-09", "status": "unknown", "detail": "Card issues in some RIO cabinets were under investigation. No later report mentions them." },
-    { "title": "Alarm list / descriptions", "raised": "2026-10-11", "status": "resolved", "detail": "Alarm list available again on 14 Oct. Loops tested earlier need alarm re-verification." },
-    { "title": "Siemens operators at workstations", "raised": "2026-10-13", "status": "resolved", "detail": "Siemens operators at each workstation from 14 Oct." }
+    {
+      "title": "Valve command vs feedback",
+      "raised": "2026-10-16",
+      "status": "open",
+      "detail": "Commanded and actual positions differ on 40TV0044A, 40FV0082A and others. Rotork DDC settings (address 50, Modbus RTU, 2% deadband) obtained on 17 Oct; repeat functional testing needed before closure."
+    },
+    {
+      "title": "SCADA / HMI availability",
+      "raised": "2026-10-13",
+      "status": "open",
+      "detail": "Siemens downloads interrupted HMI and reactivated dormant alarms. Improved by 14 Oct, but the Level 7 system was down for several hours on 16 Oct PM."
+    },
+    {
+      "title": "Wi-Fi connectivity",
+      "raised": "2026-10-13",
+      "status": "partial",
+      "detail": "Level 1A stays improved. Level 7 still needs work after the 16 Oct workstation outage and lost testing time."
+    },
+    {
+      "title": "Operator access for DO activation",
+      "raised": "2026-10-13",
+      "status": "partial",
+      "detail": "Reported resolved on 14 Oct; every report since still asks Siemens for operator permissions and DO activation support."
+    },
+    {
+      "title": "5001-C04 CWA records",
+      "raised": "2026-10-13",
+      "status": "open",
+      "detail": "Four previously OK System 50 CPCLs still show OS in CWA (unchanged in the 18 Oct report)."
+    },
+    {
+      "title": "Serial/VMS CPCL linkage",
+      "raised": "2026-10-17",
+      "status": "open",
+      "detail": "Existing serial signals need linking to their parent loops in the CPCL records (System 50)."
+    },
+    {
+      "title": "System 82 digital input state / HMI mapping",
+      "raised": "2026-10-09",
+      "status": "partial",
+      "detail": "4 CPCLs and 52 I/O held until 14 Oct. The panels were then field complete and recorded PB; digital functional testing comes next."
+    },
+    {
+      "title": "RIO cabinet I/O cards",
+      "raised": "2026-10-09",
+      "status": "unknown",
+      "detail": "Card issues in some RIO cabinets were under investigation. No later report mentions them."
+    },
+    {
+      "title": "Alarm list / descriptions",
+      "raised": "2026-10-11",
+      "status": "resolved",
+      "detail": "Alarm list available again on 14 Oct. Loops tested earlier need alarm re-verification."
+    },
+    {
+      "title": "Siemens operators at workstations",
+      "raised": "2026-10-13",
+      "status": "resolved",
+      "detail": "Siemens operators at each workstation from 14 Oct."
+    }
   ],
   "milestones": [
-    { "date": "2026-10-17", "title": "Valve discrepancy meeting", "detail": "On site, System 40 valve command/feedback." },
-    { "date": "2026-10-19", "title": "System 82 digital functional testing", "detail": "Electrical, Siemens and loop-testing teams to agree switching and test boundaries." },
-    { "date": "2026-10-19", "title": "CC2/CC3 integration forecast", "detail": "Target cob Monday, including advance notice to Siemens for ADG packages." },
-    { "date": "2026-10-26", "title": "Night shift starts", "detail": "Additional testing team, subject to resources and workstations." }
+    {
+      "date": "2026-10-19",
+      "title": "System 82 digital functional testing",
+      "detail": "Electrical, Siemens and loop-testing teams to agree switching and test boundaries."
+    },
+    {
+      "date": "2026-10-19",
+      "title": "CC2/CC3 integration forecast",
+      "detail": "Target cob Monday, including advance notice to Siemens for ADG packages."
+    },
+    {
+      "date": "2026-10-26",
+      "title": "Night shift starts",
+      "detail": "Additional testing team, subject to resources and workstations."
+    }
   ]
 }
