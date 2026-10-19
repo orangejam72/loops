@@ -4,6 +4,7 @@
 Writes:
   exports/loops-dashboard-offline.html   one self-contained file: data, fonts, theme script inlined
   exports/loops-dashboard.pdf            A4 landscape, light theme, rendered from the offline file
+  exports/manifest.json                  size and SHA-256 of each export, to check a deployment
 
 Run after scripts/build_data.py:
   npm install -g playwright@1.56.1     (once; uses its bundled Chromium)
@@ -13,6 +14,7 @@ Set CHROMIUM_PATH to use a Chromium already on the machine instead of Playwright
 */
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -77,6 +79,15 @@ async function buildPdf(offlineFile) {
   fs.mkdirSync(OUT, { recursive: true });
   const offline = buildOffline();
   const pdf = await buildPdf(offline);
+  const data = read("data/data.js");
+  const manifest = {
+    dataThrough: /"progressThrough": "([\d-]+)"(?![\s\S]*"progressThrough")/.exec(data)[1],
+    files: Object.fromEntries([offline, pdf].map((f) => {
+      const buf = fs.readFileSync(f);
+      return [path.basename(f), { bytes: buf.length, sha256: crypto.createHash("sha256").update(buf).digest("hex") }];
+    })),
+  };
+  fs.writeFileSync(path.join(OUT, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
   for (const f of [offline, pdf]) console.log(`${path.relative(ROOT, f)}  ${(fs.statSync(f).size / 1024).toFixed(0)} KB`);
 })().catch((e) => {
   console.error(e.message);

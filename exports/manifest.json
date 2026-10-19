@@ -1,0 +1,13 @@
+{
+  "dataThrough": "2026-10-17",
+  "files": {
+    "loops-dashboard-offline.html": {
+      "bytes": 374062,
+      "sha256": "1860f5debc261f69d61c560fbcf8178adda37e6d055c839ce819afba6c0a9a0a"
+    },
+    "loops-dashboard.pdf": {
+      "bytes": 357343,
+      "sha256": "8087b7c2321df1c79e85f60c27729f0365848efad2efaf04a74f31963e207c8e"
+    }
+  }
+}
