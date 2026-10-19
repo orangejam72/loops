@@ -5,11 +5,11 @@
   "rewrites": [
     {
       "source": "/prd",
-      "destination": "/docs/PRD.html"
+      "destination": "/docs/PRD"
     },
     {
       "source": "/readme",
-      "destination": "/README.html"
+      "destination": "/README"
     }
   ],
   "headers": [

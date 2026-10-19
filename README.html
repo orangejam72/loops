@@ -118,7 +118,7 @@ robots.txt                 <span class="c">blocks search crawlers</span></pre>
   </ul>
   <p>What the config does:</p>
   <ul>
-    <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes, <code>noindex</code> and basic security headers, and no caching on <code>data/</code>, so a new report appears straight after deploy.</li>
+    <li><code>vercel.json</code> adds clean URLs, the <code>/prd</code> and <code>/readme</code> routes (rewrites must point at the clean path, e.g. <code>/docs/PRD</code>, not <code>/docs/PRD.html</code>), <code>noindex</code> and basic security headers, and no caching on <code>data/</code>, so a new report appears straight after deploy.</li>
     <li><code>.vercelignore</code> keeps <code>source/</code> (the raw email with contact details) and <code>scripts/</code> off the deployed site. They stay in the repo.</li>
     <li><code>robots.txt</code> asks search engines not to crawl the site.</li>
   </ul>
